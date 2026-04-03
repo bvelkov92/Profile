@@ -3,7 +3,6 @@ package com.profile.controller;
 import com.profile.models.dto.UserLoginDTO;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,6 @@ public class UserController {
             model.addAttribute("userLoginDTO", new UserLoginDTO());
         }
 
-        return "";
+        return null;
     }
 }
