@@ -12,7 +12,7 @@
   <ul class="container">
     <li sec:authorize="!isAuthenticated()" ><a th:href="@{/}">Home</a></li>
     <li sec:authorize="isAuthenticated()" ><a th:href="@{/profile/work}">Work</a></li>
-    <li sec:authorize="isAuthenticated()" ><a th:href="@{/prifile/portfolio}">Portfolio</a></li>
+    <li sec:authorize="isAuthenticated()" ><a th:href="@{/profile/portfolio}">Portfolio</a></li>
     <li sec:authorize="isAuthenticated()" ><a th:href="@{/contact}">Contact</a></li>
     <li sec:authorize="hasRole('ADMIN')" ><a th:href="@{/admin/panel}">Administration</a></li>
     <li sec:authorize="!isAuthenticated()" ><a th:href="@{register}">Register</a></li>
