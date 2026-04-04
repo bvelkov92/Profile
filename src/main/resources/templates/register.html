@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div th:replace="~{fragments/nav}"></div>
+<article id="contact" class="wrapper style4">
+    <div class="container medium">
+        <header>
+            <h2>REGISTRATION</h2>
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <form
+                        th:method="post"
+                        th:action="@{/register}"
+                        th:object = "${userRegisterDTO}">
+                    <div class="row">
+                        <div class="col-6 col-12-small">
+                            <input th:field="*{username}"
+                                   type="text"
+                                   name="username"
+                                   id="username"
+                                   placeholder="Username"
+                                   th:errorclass="is-invalid"/>
+                            <p class="invalid-feedback errors alert alert-danger"
+                               th:errors="*{username}">
+                            </p>
+                        </div>
+                        <div class="col-6 col-12-small">
+                            <input
+                                    type="password"
+                                    name="password"
+                                    th:field="*{password}"
+                                    id="password"
+                                    placeholder="Password"
+                                    th:errorclass="is-invalid"/>
+                            <p class="invalid-feedback errors alert alert-danger">
+                                Password must be between 6 and 20 symbols!
+                            </p>
+                        </div>
+                        <div class="col-6 col-12-small">
+                            <input type="password"
+                                   name="confirmPassword"
+                                   th:field="*{confirmPassword}"
+                                   id="confirmPassword"
+                                   placeholder="Confirm password"
+                                   th:errorclass="is-invalid"/>
+                            <p class="invalid-feedback errors alert alert-danger">
+                                The passwords are not equals!
+                            </p>
+                        </div>
+
+                        <div class="col-6 col-12-small">
+                            <input type="text"
+                                   name="email"
+                                   th:field="*{email}"
+                                   id="email"
+                                   placeholder="Email"
+                                   th:errorclass="is-invalid"/>
+                            <p class="invalid-feedback errors alert alert-danger">
+                                This email has been used!
+                            </p>
+                        </div>
+
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><input type="submit" value="Register" /></li>
+                                <li><input type="reset" value="Clear Form" class="alt" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <hr />
+                <h3>Find me on ...</h3>
+                <ul class="social">
+                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                    <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
+                    <li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+                    <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                </ul>
+                <hr />
+            </div>
+        </div>
+        <footer>
+            <ul id="copyright">
+                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </footer>
+    </div>
+</article>
+
+<!-- Scripts -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.scrolly.min.js}"></script>
+<script th:src="@{/js/browser.min.js}"></script>
+<script th:src="@{/js/breakpoints.min.js}"></script>
+<script th:src="@{/js/util.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
