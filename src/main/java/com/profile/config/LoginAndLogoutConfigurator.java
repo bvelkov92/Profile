@@ -22,7 +22,7 @@ public class LoginAndLogoutConfigurator {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .defaultSuccessUrl("/", true)
-                                .failureForwardUrl("/login?error"))
+                                .failureUrl("/login?error"))
                 .logout(formLogout->
                         formLogout.logoutUrl("/logout")
                                 .logoutSuccessUrl("/")

@@ -1,5 +1,6 @@
 package com.profile.controller;
 
+import com.profile.models.dto.UserLoginDTO;
 import com.profile.models.dto.UserRegisterDTO;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
@@ -27,6 +28,9 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLoginPage(Model model){
+        if (!model.containsAttribute("userLoginDTO")){
+            model.addAttribute("userLoginDTO", new UserLoginDTO());
+        }
         return "login";
     }
 

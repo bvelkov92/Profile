@@ -30,7 +30,7 @@ public class ProfileUserServiceImpl implements UserDetailsService {
         return   org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities("ADMIN")
+                .authorities("ROLE_" + user.getRole().name())
                 .build();
     }
 }
