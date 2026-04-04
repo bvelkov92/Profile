@@ -1,11 +1,15 @@
 package com.profile.controller;
 
-import com.profile.models.dto.UserLoginDTO;
+import com.profile.models.dto.UserRegisterDTO;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -16,12 +20,61 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String getIndexPage(){
+        return "index";
+    }
+
     @GetMapping("/login")
-    public String getLoginPage(@Valid Model model){
-        if (!model.containsAttribute("userLoginDTO")){
-            model.addAttribute("userLoginDTO", new UserLoginDTO());
+    public String getLoginPage(Model model){
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage(Model model){
+        if (!model.containsAttribute("userRegisterDTO")){
+            model.addAttribute("userRegisterDTO", new UserRegisterDTO());
+        }
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String postRegisterPage(@Valid UserRegisterDTO userRegisterDTO,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes){
+
+        if(this.userService.isUsernameValid(userRegisterDTO)){
+            bindingResult.rejectValue("username", "usedUsername", "Username exist or is less than 5 symbols!");
         }
 
-        return null;
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("userRegisterDTO", userRegisterDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
+            return "redirect:/register";
+        }
+            this.userService.userRegister(userRegisterDTO);
+
+        return "index";
+
     }
+
+    @GetMapping("/contact")
+    public String getContactPage(Model model){
+
+        return "contact";
+    }
+
+    @GetMapping("profile/work")
+    public String getWorkPage(Model model){
+
+        return "work";
+    }
+
+    @GetMapping("/prifile/portfolio")
+    public String getPortfolioPage(){
+
+        return "portfolio";
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package com.profile.models;
 
-import com.profile.repositiry.UserRepository;
+import com.profile.repository.UserRepository;
 import com.profile.service.ServiceImplementation.ProfileUserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

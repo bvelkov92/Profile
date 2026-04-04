@@ -2,7 +2,7 @@ package com.profile.service.ServiceImplementation;
 
 
 import com.profile.models.entity.User;
-import com.profile.repositiry.UserRepository;
+import com.profile.repository.UserRepository;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
