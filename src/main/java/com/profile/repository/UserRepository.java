@@ -1,6 +1,5 @@
 package com.profile.repository;
 
-import com.profile.models.dto.UserRegisterDTO;
 import com.profile.models.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

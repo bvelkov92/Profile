@@ -1,11 +1,10 @@
 package com.profile.service.ServiceImplementation;
 
-import com.profile.models.dto.UserRegisterDTO;
+import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +12,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepositoryl, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepositoryl;
-        this.modelMapper = modelMapper;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -40,4 +37,9 @@ public class UserServiceImpl implements  UserService {
             User foundUser = this.userRepository.findByUsername(userRegisterDTO.getUsername().trim().toLowerCase()).orElse(null);
             return foundUser != null;
         }
+
+    @Override
+    public User getUsername(String username) {
+        return this.userRepository.findByUsername(username.trim().toLowerCase()).orElse(null);
+    }
 }
