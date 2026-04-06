@@ -46,6 +46,7 @@ public class UserController {
         if (!model.containsAttribute("userLoginDTO")) {
             model.addAttribute("userLoginDTO", new UserLoginDTO());
         }
+
         return "login";
     }
 

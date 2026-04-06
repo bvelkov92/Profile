@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 	<head th:replace="~{fragments/head}">
 	</head>
 	<body class="is-preload">
@@ -14,10 +14,16 @@
 						</div>
 						<div class="col-8 col-7-large col-12-medium">
 							<header>
-								<h1>Hi. I'm <strong>Jane Doe</strong>.</h1>
+								<h1><p sec:authorize="isAuthenticated()">
+									Welcome <span sec:authentication="name"></span>
+								</p>
+									<p sec:authorize="!isAuthenticated()">
+										Welcome
+									</p></h1>
 							</header>
-							<p>And this is <strong>Miniport</strong>, a free, fully responsive HTML5 site template designed by <a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net">HTML5 UP</a> &amp; released under the <a href="http://html5up.net/license">CCA license</a>.</p>
-							<a href="#work" class="button large scrolly">Learn about what I do</a>
+							<h3 sec:authorize="!isAuthenticated()">You have no registration? <br><br><br>
+								<strong> <a th:href="@{/register}" class="scrolly">Sing up here!</a></strong></h3>
+
 						</div>
 					</div>
 				</div>
