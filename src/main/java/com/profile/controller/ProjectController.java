@@ -38,7 +38,7 @@ public class ProjectController {
     @GetMapping("/{loggedUserId}/myprojects")
     public String getPortfolioPage(@PathVariable Long loggedUserId, Model model) {
         this.projectService.getMyAllProjects(loggedUserId);
-        return "portfolio";
+        return "project";
     }
 
     @GetMapping("/{loggedUserId}/myprojects/new")
