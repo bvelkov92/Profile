@@ -16,7 +16,10 @@ public class LoginAndLogoutConfigurator {
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/").permitAll()
-                                .anyRequest().permitAll())
+                                .requestMatchers( "/register", "/login").anonymous()
+                                .requestMatchers("/projects").authenticated()
+                                .requestMatchers("/admin/panel").hasRole("ADMIN")
+                                .anyRequest().authenticated())
                 .formLogin(formLogin ->
                         formLogin.loginPage("/login")
                                 .usernameParameter("username")
