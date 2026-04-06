@@ -32,10 +32,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RolesEnum role;
 
-
     private String firstName;
     private String middleName;
     private String lastName;
+    private boolean isBanned;
 
 
 }
