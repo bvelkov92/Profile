@@ -1,11 +1,13 @@
 package com.profile.service.ServiceImplementation;
 
+import com.profile.models.dto.FunctionsDTO;
 import com.profile.models.dto.RoleDTO.ChangeRoleDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ public class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -49,10 +53,23 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public void setNewRole(ChangeRoleDTO changeRoleDTO) {
-        Optional<User> foundUser = this.userRepository.findByUsername(changeRoleDTO.getUsername());
-        foundUser.ifPresent(user -> user.setRole(changeRoleDTO.getRole()));
-    }
+    public void executeAdminAction(FunctionsDTO functionsDTO) {
+        User foundUser = this.userRepository.findByUsername(functionsDTO.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found!"));
+
+
+        switch (functionsDTO.getFunctionName()) {
+                case "Change role" -> foundUser.setRole(functionsDTO.getRole());
+                case "Ban user" -> foundUser.setBanned(true);
+                case "Unban user" -> foundUser.setBanned(false);
+                case "Delete user" -> {
+                    this.userRepository.delete(foundUser);
+                    return;
+                }
+                default -> throw new NullPointerException("User not found!");
+            }
+            this.userRepository.save(foundUser);
+        }
 
     @Override
     public List<User> allUsers() {

@@ -11,35 +11,36 @@
         </header>
         <div class="row">
             <div class="col-12">
-                <form
-                        th:method="post"
-                        th:action="@{/admin/panel/changerole}"
-                        th:object = "${changeRoleDTO}">
+                <form   th:method="post"
+                        th:action="@{/admin/panel/submit}"
+                        th:object = "${functionsDTO}">
                     <div class="row">
                         <div  class="col-12">
-                            <select name="selectFunction" id="selectFunction">
-<!--                                <option th:each = "currentRole: ${getAllRoles}"-->
-<!--                                th:value = "${currentRole}"-->
-<!--                                th:text = "${currentRole}"-->
-<!--                                >ROLE</option>-->
-<!--                                TODO: To implement list with functions.-->
-<!--                                TODO: To crate methods about the new functions in Service  -- ChangeRole, DeleteUser, BlockUser and UnblockUser-->
+                            <select  th:field="*{functionName}">
+                                <option th:each = "currentFunction: ${getAdminFunction}"
+                                th:value = "${currentFunction}"
+                                th:text = "${currentFunction}"
+                                >Select Function</option>
                             </select>
                         </div>
                         <div class="col-12">
-                           <select>
+                           <select th:field = "*{username}" >
                                <option th:each ="currentUser : ${allUsers}"
                                th:value="${currentUser.username}"
                                th:text = "${currentUser.username}"
-                               ></option>
+                               >Select user</option>
                            </select>
                         </div>
                         <div class="col-12">
-                           <select>
+                           <select th:field="*{role}" >
                                <option th:each ="role : ${getAllRoles}"
                                        th:text="${role.name}"
-                                       th:value="${role.name}"></option>
+                                       th:value="${role.name}">Select role</option>
                            </select>
+                            <div class="col-12">
+                            <p th:if="${#fields.hasGlobalErrors()}"
+                               th:text="${#fields.globalErrors()[0].defaultMessage}"></p>
+                            </div>
                         </div>
                         <div class="col-12">
                             <ul class="actions">
