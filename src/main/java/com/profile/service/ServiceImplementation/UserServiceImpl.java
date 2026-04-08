@@ -5,6 +5,7 @@ import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
+import com.profile.service.serviceAnotation.BlackListService;
 import com.profile.service.serviceAnotation.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,13 @@ public class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BlackListService blackListService;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, BlackListService blackListService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.blackListService = blackListService;
     }
 
     @Override
@@ -55,8 +58,15 @@ public class UserServiceImpl implements  UserService {
 
         switch (functionsDTO.getFunctionName()) {
                 case "Change role" -> foundUser.setRole(functionsDTO.getRole());
-                case "Ban user" -> foundUser.setBanned(true);
-                case "Unban user" -> foundUser.setBanned(false);
+                case "Ban user" -> {
+                    foundUser.setBanned(true);
+                    this.blackListService.addUserToBlackList(foundUser);
+
+                }
+                case "Unban user" -> {
+                    foundUser.setBanned(false);
+                    this.blackListService.deleteUserFromBlackList(foundUser);
+                }
                 case "Delete user" -> {
                     this.userRepository.delete(foundUser);
                     return;
