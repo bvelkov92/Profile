@@ -1,18 +1,14 @@
 package com.profile.service.ServiceImplementation;
 
 import com.profile.models.dto.FunctionsDTO;
-import com.profile.models.dto.RoleDTO.ChangeRoleDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements  UserService {
