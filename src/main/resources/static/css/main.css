@@ -2092,6 +2092,17 @@ input, select, textarea {
             background: #383838;
             }
 
+            #avatar .avatar{
+                                width: 35px;
+                                height: 35px;
+                                border-radius: 50%;
+                                object-fit: cover;
+
+                                display: inline-block;
+                                max-width: none;
+                                transform: translateY(10px);
+            }
+
 
 			#nav a:hover {
 				color: #fff !important;

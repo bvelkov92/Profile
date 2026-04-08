@@ -1,14 +1,13 @@
 package com.profile.repository;
 
-import com.profile.models.entity.BlackList;
-import com.profile.models.entity.User;
+import com.profile.models.entity.BlackListUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface BlackListRepository extends JpaRepository<BlackList, Long> {
+public interface BlackListRepository extends JpaRepository<BlackListUser, Long> {
 
-    Optional <BlackList> findByUserUsername(String username);
+    Optional <BlackListUser> findByBannedUser_Username(String username);
 }

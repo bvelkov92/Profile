@@ -1,5 +1,5 @@
 package com.profile.service.ServiceImplementation;
-import com.profile.models.entity.BlackList;
+import com.profile.models.entity.BlackListUser;
 import com.profile.models.entity.User;
 import com.profile.repository.BlackListRepository;
 import com.profile.repository.UserRepository;
@@ -28,9 +28,9 @@ public class BlackListServiceImpl implements BlackListService {
 
     @Override
     public void addUserToBlackList(User user) {
-       BlackList foundUser =  this.blackListRepository.findByUserUsername(user.getUsername()).orElse(null);
+       BlackListUser foundUser =  this.blackListRepository.findByBannedUser_Username(user.getUsername()).orElse(null);
        if (foundUser==null){
-           this.blackListRepository.save(modelMapper.map(user, BlackList.class));
+           this.blackListRepository.save(modelMapper.map(user, BlackListUser.class));
        }
 
 
@@ -39,7 +39,7 @@ public class BlackListServiceImpl implements BlackListService {
 
     @Override
     public void deleteUserFromBlackList(User user) {
-        this.blackListRepository.findByUserUsername(user.getUsername()).ifPresent(this.blackListRepository::delete);
+        this.blackListRepository.findByBannedUser_Username(user.getUsername()).ifPresent(this.blackListRepository::delete);
     }
 
 

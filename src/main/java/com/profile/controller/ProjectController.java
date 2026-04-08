@@ -35,14 +35,14 @@ public class ProjectController {
 
     ////============= GET MAPPINGS   AND   POST MAPPINGS ============================
 
-    @GetMapping("/{loggedUserId}/myprojects")
-    public String getPortfolioPage(@PathVariable Long loggedUserId, Model model) {
-        this.projectService.getMyAllProjects(loggedUserId);
+    @GetMapping("/{userId}/myprojects")
+    public String getPortfolioPage(@PathVariable Long userId, Model model) {
+        this.projectService.getMyAllProjects(userId);
         return "project";
     }
 
-    @GetMapping("/{loggedUserId}/myprojects/new")
-    public String getAddNewProject(@PathVariable Long loggedUserId, Model model){
+    @GetMapping("/{userId}/myprojects/new")
+    public String getAddNewProject(@PathVariable Long userId, Model model){
         if (!model.containsAttribute("addNewProjectDTO")){
             model.addAttribute("addNewProjectDTO", new AddNewProjectDTO());
         }
