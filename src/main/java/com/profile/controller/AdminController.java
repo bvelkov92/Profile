@@ -93,8 +93,8 @@ public class AdminController {
         }
 
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("functionDTO", functionsDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.functionDTO");
+            redirectAttributes.addFlashAttribute("functionsDTO", functionsDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.functionsDTO", bindingResult);
             return "redirect:/admin/panel";
         }
             this.userService.executeAdminAction(functionsDTO);

@@ -39,7 +39,8 @@
                            </select>
                             <div class="col-12">
                             <p th:if="${#fields.hasGlobalErrors()}"
-                               th:text="${#fields.globalErrors()[0].defaultMessage}"></p>
+                               th:each="err : ${#fields.globalErrors()}"
+                               th:text="${err}"></p>
                             </div>
                         </div>
                         <div class="col-12">
