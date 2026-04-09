@@ -11,7 +11,6 @@
 <nav th:fragment = "nav" id="nav">
   <ul class="container">
     <li><a th:href="@{/}">Home</a></li>
-    <li sec:authorize="isAuthenticated()"><a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/jobs}">Job offers</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{register}">Register</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
@@ -23,13 +22,14 @@
     <li class="dropdown"  sec:authorize="isAuthenticated()">
       <a th:href="@{#}">Options</a>
       <ul class="dropdown-menu">
-        <li sec:authorize="isAuthenticated()">
-          <a th:href="@{/{id}/profile(id=${userId})}">Profile</a>
-        </li>
         <li sec:authorize="hasRole('ADMIN')">
           <a th:href="@{/admin/panel}">Administration</a>
         </li>
-        <li sec:authorize="hasRole('ADMIN')">
+        <li sec:authorize="isAuthenticated()">
+          <a th:href="@{/{id}/profile(id=${userId})}">Profile</a>
+        </li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a></li>
+        <li sec:authorize="isAuthenticated()">
           <a th:href="@{/{id}/password(id=${userId})}">Change Password</a>
         </li>
         <form sec:authorize="isAuthenticated()"
