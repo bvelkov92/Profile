@@ -1,4 +1,4 @@
-package com.profile.models.dto.RoleDTO;
+package com.profile.models.dto.adminAccessDTO;
 
 import com.profile.models.enums.RolesEnum;
 import lombok.Getter;

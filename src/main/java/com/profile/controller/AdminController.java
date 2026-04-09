@@ -1,6 +1,6 @@
 package com.profile.controller;
 
-import com.profile.models.dto.FunctionsDTO;
+import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.service.serviceAnotation.UserService;

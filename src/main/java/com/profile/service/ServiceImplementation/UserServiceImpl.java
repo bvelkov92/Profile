@@ -1,6 +1,7 @@
 package com.profile.service.ServiceImplementation;
 
-import com.profile.models.dto.FunctionsDTO;
+import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
+import com.profile.models.dto.userDTO.ProfileDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
@@ -47,7 +48,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public User getUsername(String username) {
-        return this.userRepository.findByUsername(username.trim().toLowerCase()).orElse(null);
+        return this.userRepository.findByUsername(username).orElse(null);
     }
 
     @Override
@@ -79,5 +80,23 @@ public class UserServiceImpl implements  UserService {
     @Override
     public List<User> allUsers() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return this.userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void changeUserInfo(ProfileDTO profileDTO) {
+       User foundUser = this.userRepository.findByUsername(profileDTO.getUsername().trim().toLowerCase()).orElse(null);
+        if (foundUser!=null) {
+            foundUser.setFirstName(profileDTO.getFirstName());
+            foundUser.setMiddleName(profileDTO.getMiddleName());
+            foundUser.setLastName(profileDTO.getLastName());
+            this.userRepository.save(foundUser);
+        } else {
+            throw new NullPointerException("User not found!");
+        }
     }
 }

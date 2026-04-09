@@ -13,17 +13,31 @@
     <li><a th:href="@{/}">Home</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/jobs}">Job offers</a></li>
-    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/panel}">Administration</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{register}">Register</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/contact}">Contacts</a></li>
     <li id="logout">
-    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="post">
-      <button type="submit">Logout</button>
-    </form>
+    <li id="avatar" sec:authorize="isAuthenticated()">
+      <img class="avatar" th:src="@{/images/pic00.jpg}" alt="noIMG">
     </li>
-    <li id="avatar">
-      <img sec:authorize="isAuthenticated()" th:src="@{/images/pic00.jpg}" class="avatar" alt="noImage">
+    <li class="dropdown"  sec:authorize="isAuthenticated()">
+      <a th:href="@{#}">Options</a>
+      <ul class="dropdown-menu">
+        <li sec:authorize="isAuthenticated()">
+          <a th:href="@{/{id}/profile(id=${userId})}">Profile</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a th:href="@{/admin/panel}">Administration</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a th:href="@{/{id}/password(id=${userId})}">Change Password</a>
+        </li>
+        <form sec:authorize="isAuthenticated()"
+              th:action="@{/logout}"
+              th:method="post">
+          <button type="submit">Logout</button>
+        </form>
+      </ul>
     </li>
   </ul>
 </nav>

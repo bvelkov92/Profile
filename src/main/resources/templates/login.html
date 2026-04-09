@@ -15,7 +15,7 @@
                 th:action="@{/login}"
                 th:object = "${userLoginDTO}">
           <div class="row">
-            <div class="col-6 col-12-small">
+            <div class="col-12">
               <input th:field="*{username}"
                      type="text"
                      name="username"
@@ -26,7 +26,7 @@
                  th:errors="*{username}">
               </p>
             </div>
-            <div class="col-6 col-12-small">
+            <div class="col-12">
               <input
                       type="password"
                       name="password"

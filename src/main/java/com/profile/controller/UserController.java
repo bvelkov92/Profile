@@ -1,9 +1,11 @@
 package com.profile.controller;
 
+import com.profile.models.dto.userDTO.ProfileDTO;
 import com.profile.models.dto.userDTO.UserLoginDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,7 @@ public class UserController {
     }
 
 
-    ////============== MODEL ATTRIBUTES ======================
+    /// /============== MODEL ATTRIBUTES ======================
     @ModelAttribute("userId")
     public Long getLoggedUserId(Principal principal) {
         if (principal != null) {
@@ -34,7 +36,8 @@ public class UserController {
         }
         return null;
     }
-    ////============= GET MAPPINGS   AND   POST MAPPINGS ============================
+
+    /// /============= GET MAPPINGS   AND   POST MAPPINGS ============================
 
     @GetMapping("/")
     public String getIndexPage() {
@@ -90,7 +93,35 @@ public class UserController {
         return "work";
     }
 
+    @GetMapping("/{userId}/profile")
+    public String getProfileInfoPage(@PathVariable Long userId, Model model) {
+        if (!model.containsAttribute("profileDTO")) {
+            model.addAttribute("profileDTO", this.userService.getUserById(userId));
+            }
+            return "account";
+        }
+
+    @GetMapping("/{userId}/profile/edit")
+    public String getChangeProfileInfoPage(@PathVariable Long userId, Model model){
+        if (!model.containsAttribute("profileDTO")){
+            model.addAttribute("profileDTO", this.userService.getUserById(userId));
+        }
+        return "change-account";
+    }
 
 
+    @PostMapping ("/{userId}/profile/edit")
+    public String postProfileInfoPage(@PathVariable Long userId, ProfileDTO profileDTO,
+                                      BindingResult bindingResult,
+                                      RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("profileDTO", profileDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.profileDTO", bindingResult);
+
+            return "redirect:/" +userId +"/profile";
+        }
+            this.userService.changeUserInfo(profileDTO);
+        return "redirect:/" +userId +"/profile";
+    }
 
 }
