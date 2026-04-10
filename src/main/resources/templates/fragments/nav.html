@@ -32,6 +32,9 @@
         <li sec:authorize="isAuthenticated()">
           <a th:href="@{/{id}/password(id=${userId})}">Change Password</a>
         </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a th:href="@{/all}">Registered users</a>
+        </li>
         <form sec:authorize="isAuthenticated()"
               th:action="@{/logout}"
               th:method="post">

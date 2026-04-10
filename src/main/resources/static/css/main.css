@@ -31,6 +31,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
+	background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
 }
 
 ol, ul {
@@ -49,6 +50,47 @@ blockquote, q {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	width: 100%;
+}
+.table-wrapper {
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 20px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#usersTable {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+#usersTable th {
+    background: #000;
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#usersTable td {
+    padding: 14px;
+    border-bottom: 1px solid #333;
+}
+
+#usersTable tr:hover {
+    background: #2c2c2c;
+}
+
+#usersTable a {
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+#usersTable a:hover {
+    text-decoration: underline;
 }
 
 body {

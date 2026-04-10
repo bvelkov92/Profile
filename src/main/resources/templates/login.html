@@ -34,9 +34,13 @@
                       id="password"
                       placeholder="Password"
                       th:errorclass="is-invalid"/>
-              <p class="invalid-feedback errors alert alert-danger">
-                Password must be between 6 and 20 symbols!
-              </p>
+              <div th:if="${param.banned}" style="color:red;">
+                Your account is banned!
+              </div>
+
+              <div th:if="${param.error}" style="color:red;">
+                Invalid username or password!
+              </div>
             <div class="col-12">
               <ul class="actions">
                 <li><input type="submit" value="Login" /></li>

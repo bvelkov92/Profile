@@ -3,6 +3,7 @@ package com.profile.config;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -25,8 +26,14 @@ public class LoginAndLogoutConfigurator {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .defaultSuccessUrl("/", true)
-                                .failureUrl("/login?error"))
-                .logout(formLogout->
+                                .failureHandler((request, response, exception) -> {
+                                         if (exception instanceof LockedException) {
+                                             response.sendRedirect("/login?banned");
+                                         } else {
+                                             response.sendRedirect("/login?error");
+                                         }
+                        }))
+                        .logout(formLogout->
                         formLogout.logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true));

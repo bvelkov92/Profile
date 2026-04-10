@@ -124,4 +124,21 @@ public class UserController {
         return "redirect:/" +userId +"/profile";
     }
 
+    @GetMapping("/all")
+    public String getAllUsersPage(Model model){
+        if (!model.containsAttribute("allUsers")){
+            model.addAttribute("allUsers", this.userService.allUsers());
+        }
+        return "all-registered-users";
+    }
+
+    @GetMapping("/all/{id}/profile")
+    public String getSelectedProfilePage(@PathVariable Long id,Model model){
+        if (!model.containsAttribute("profileDTO")){
+            model.addAttribute("profileDTO", this.userService.getUserById(id));
+        }
+        return "other-account-view";
+    }
+
+
 }
