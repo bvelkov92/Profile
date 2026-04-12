@@ -44,7 +44,7 @@ public class AdminController {
     public Long getLoggedUserId(Principal principal) {
         if (principal != null) {
             String user = principal.getName();
-            return this.userService.getUsername(user).getId();
+            return this.userService.getUserByUsername(user).getId();
         }
         return null;
     }
@@ -67,8 +67,8 @@ public class AdminController {
 
         switch (functionsDTO.getFunctionName()) {
             case "Change role" -> {
-                RolesEnum currentRole = this.userService.getUsername(functionsDTO.getUsername()).getRole();
-                User foundUsername = this.userService.getUsername(functionsDTO.getUsername());
+                RolesEnum currentRole = this.userService.getUserByUsername(functionsDTO.getUsername()).getRole();
+                User foundUsername = this.userService.getUserByUsername(functionsDTO.getUsername());
 
                 if (foundUsername.getRole().equals(RolesEnum.ADMIN) || foundUsername.getId() == 1) {
                     bindingResult.reject
@@ -79,7 +79,7 @@ public class AdminController {
                 }
             }
             case "Ban user" -> {
-                User foundUser = this.userService.getUsername(functionsDTO.getUsername());
+                User foundUser = this.userService.getUserByUsername(functionsDTO.getUsername());
                 if (foundUser.isBanned()) {
                     bindingResult.reject("error", "This username is already banned!");
                 } else if (foundUser.getRole().equals(RolesEnum.ADMIN)) {
@@ -87,13 +87,13 @@ public class AdminController {
                 }
             }
             case "Unban user" -> {
-                User foundUser = this.userService.getUsername(functionsDTO.getUsername());
+                User foundUser = this.userService.getUserByUsername(functionsDTO.getUsername());
                 if (!foundUser.isBanned()) {
                     bindingResult.reject("error", "This username is not banned!");
                 }
             }
             case "Delete user" -> {
-                User foundUser = this.userService.getUsername(functionsDTO.getUsername());
+                User foundUser = this.userService.getUserByUsername(functionsDTO.getUsername());
                 if (foundUser == null
                         || foundUser.getRole().equals(RolesEnum.ADMIN)
                         || foundUser.getRole().name().equals(functionsDTO.getRole().name())) {

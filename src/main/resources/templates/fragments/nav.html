@@ -16,17 +16,14 @@
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/contact}">Contacts</a></li>
     <li id="logout">
-    <li id="avatar" sec:authorize="isAuthenticated()">
-      <img class="avatar" th:src="@{/images/pic00.jpg}" alt="noIMG">
-    </li>
-    <li class="dropdown"  sec:authorize="isAuthenticated()">
-      <a th:href="@{#}">Options</a>
+    <li  class="dropdown" sec:authorize="isAuthenticated()">
+    <a th:href="@{/{id}/profile(id=${userId})}"><img class="avatar" th:src="@{/images/pic00.jpg}" alt="noIMG"> Profile</a>
       <ul class="dropdown-menu">
         <li sec:authorize="hasRole('ADMIN')">
           <a th:href="@{/admin/panel}">Administration</a>
         </li>
         <li sec:authorize="isAuthenticated()">
-          <a th:href="@{/{id}/profile(id=${userId})}">Profile</a>
+
         </li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a></li>
         <li sec:authorize="isAuthenticated()">

@@ -28,7 +28,7 @@ public class ProjectController {
     public Long getLoggedUserId(Principal principal) {
         if (principal != null) {
             String user = principal.getName();
-            return this.userService.getUsername(user).getId();
+            return this.userService.getUserByUsername(user).getId();
         }
         return null;
     }

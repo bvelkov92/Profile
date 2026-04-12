@@ -10,7 +10,7 @@ public interface UserService {
 
     void userRegister(UserRegisterDTO userRegisterDTO);
     boolean isUsernameValid(UserRegisterDTO userRegisterDTO);
-    User getUsername(String username);
+    User getUserByUsername(String username);
     void executeAdminAction(FunctionsDTO functionsDTO);
     List<User> allUsers();
     User getUserById(Long id);
