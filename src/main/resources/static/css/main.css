@@ -2121,16 +2121,17 @@ input, select, textarea {
 		}
 
 
-            #avatar .avatar{
-                                width: 35px;
-                                height: 35px;
-                                border-radius: 50%;
-                                object-fit: cover;
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    transform: translateY(10px);
 
-                                display: inline-block;
-                                max-width: none;
-                                transform: translateY(10px);
-            }
+    display: inline-block;
+
+}
+
 
 .dropdown {
     position: relative;

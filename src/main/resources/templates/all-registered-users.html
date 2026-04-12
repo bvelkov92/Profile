@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div th:replace ="~{/fragments/nav}"></div>
+
+<div class="container-fluid">
+    <div  class="table-wrapper">
+      <table id="usersTable" class="table">
+        <thead>
+        <tr>
+          <th><h4>Username</h4></th>
+          <th><h4>Email</h4></th>
+          <th><h4>Role</h4></th>
+          <th><h4>Function</h4></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "user : ${allUsers}">
+          <td th:text="${user.username}"></td>
+          <td th:text="${user.email}"></td>
+          <td th:text="${user.role}"></td>
+          <td> <a th:href="@{/profile/{id}(id=${user.id})}">View Profile</a></td>
+          <td>
+            <a th:href="@{/profile/{id}/send(id=${user.id})}">
+              <img class="avatar" th:src="@{/images/message.png}" alt="noIMG">
+            </a>
+          </td>
+        </tbody>
+      </table>
+  </div>
+</div>
+</body>
+</html>

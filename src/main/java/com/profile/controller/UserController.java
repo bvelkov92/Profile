@@ -5,7 +5,6 @@ import com.profile.models.dto.userDTO.UserLoginDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +31,7 @@ public class UserController {
     public Long getLoggedUserId(Principal principal) {
         if (principal != null) {
             String user = principal.getName();
-            return this.userService.getUsername(user).getId();
+            return this.userService.getUserByUsername(user).getId();
         }
         return null;
     }
@@ -132,7 +131,7 @@ public class UserController {
         return "all-registered-users";
     }
 
-    @GetMapping("/all/{id}/profile")
+    @GetMapping("/profile/{id}")
     public String getSelectedProfilePage(@PathVariable Long id,Model model){
         if (!model.containsAttribute("profileDTO")){
             model.addAttribute("profileDTO", this.userService.getUserById(id));

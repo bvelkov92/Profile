@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div th:replace="~{fragments/nav}"></div>
+<article id="contact" class="wrapper style4">
+    <div class="container medium">
+        <header>
+            <h2>Send Message</h2>
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <form th:method="post"
+                      th:action="@{/profile/{id}/send(id=${id})}"
+                      th:object="${messageDTO}">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" name="subject" id="subject" placeholder="Subject" />
+                        </div>
+                        <div class="col-12">
+                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><input type="submit" value="Send Message" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div th:replace="~{fragments/social}"></div>
+        </div>
+        <footer>
+            <ul id="copyright">
+                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </footer>
+    </div>
+</article>
+<!-- Scripts -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.scrolly.min.js}"></script>
+<script th:src="@{/js/browser.min.js}"></script>
+<script th:src="@{/js/breakpoints.min.js}"></script>
+<script th:src="@{/js/util.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
