@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div th:replace ="~{/fragments/nav}"></div>
+
+<div class="container-fluid">
+    <div  class="table-wrapper">
+      <table id="usersTable" class="table">
+        <thead>
+        <tr>
+          <th><h4>From:</h4></th>
+          <th><h4>Message</h4></th>
+          <th><h4>Date</h4></th>
+          <th><h4>Functions</h4></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "message : ${getLoggedUserMessages}">
+          <td th:text="${message.sender}"></td>
+          <td th:text="${message.text}"></td>
+          <td th:text="${message.sentAt}"></td>
+        </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+</body>
+</html>
