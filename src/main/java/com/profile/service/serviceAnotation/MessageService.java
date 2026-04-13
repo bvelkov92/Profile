@@ -9,4 +9,5 @@ public interface MessageService {
     void sendMsg(String sender, Long receiverId,  String message);
     List<LoggedUserMessagesDTO> getAllMyMessages(String username);
     boolean hasUnreadMessages(String username);
+    void deleteMessage(Long id);
 }

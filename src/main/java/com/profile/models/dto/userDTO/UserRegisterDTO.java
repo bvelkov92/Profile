@@ -17,11 +17,12 @@ public class UserRegisterDTO {
     @Size(min = 6, max = 20)
     private String password;
 
-
     private String confirmPassword;
 
     @Email
     @NotBlank
     private String email;
+
+    private String image;
 
 }

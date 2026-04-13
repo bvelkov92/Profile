@@ -1,7 +1,8 @@
 package com.profile.service.ServiceImplementation;
 
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
-import com.profile.models.dto.userDTO.ProfileDTO;
+import com.profile.models.dto.userDTO.AllUsersDTO;
+import com.profile.models.dto.userDTO.UserProfileDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
@@ -10,7 +11,14 @@ import com.profile.service.serviceAnotation.BlackListService;
 import com.profile.service.serviceAnotation.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import javax.swing.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements  UserService {
@@ -27,7 +35,7 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public void userRegister(UserRegisterDTO userRegisterDTO) {
+    public void userRegister(UserRegisterDTO userRegisterDTO, MultipartFile file) {
             User newUser = new User();
             newUser.setUsername(userRegisterDTO.getUsername().trim().toLowerCase());
             newUser.setEmail(userRegisterDTO.getEmail().trim().toLowerCase());
@@ -38,6 +46,19 @@ public class UserServiceImpl implements  UserService {
                 newUser.setRole(RolesEnum.USER);
             }
             newUser.setBanned(false);
+            if (file != null && !file.isEmpty()) {
+                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                Path path = Paths.get("uploads/" + fileName);
+                try {
+                    Files.createDirectories(path.getParent());
+                    Files.write(path, file.getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException("File upload failed");
+                }
+                newUser.setImage(fileName);
+            }else {
+                newUser.setImage("default.jpg");
+            }
             this.userRepository.save(newUser);
     }
 
@@ -78,8 +99,18 @@ public class UserServiceImpl implements  UserService {
         }
 
     @Override
-    public List<User> allUsers() {
+    public List<User> getAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public List<AllUsersDTO> viewAllRegisteredUsers() {
+        return this.userRepository.findAll().stream().map(user -> new AllUsersDTO(
+                user.getUsername(),
+                user.getImage(),
+                user.getAge(),
+                user.getCity()
+                )).toList();
     }
 
     @Override
@@ -88,7 +119,7 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public void changeUserInfo(ProfileDTO profileDTO) {
+    public void changeUserInfo(UserProfileDTO profileDTO) {
        User foundUser = this.userRepository.findByUsername(profileDTO.getUsername().trim().toLowerCase()).orElse(null);
         if (foundUser!=null) {
             foundUser.setFirstName(profileDTO.getFirstName());

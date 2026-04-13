@@ -30,7 +30,7 @@ public class AdminController {
 
     @GetMapping("/panel")
     public String getAdminPanelPage(Model model){
-        model.addAttribute("allUsers", this.userService.allUsers());
+        model.addAttribute("allUsers", this.userService.getAllUsers());
         if (!model.containsAttribute("functionsDTO")) {
             model.addAttribute("functionsDTO", new FunctionsDTO());
         }

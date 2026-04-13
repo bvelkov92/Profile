@@ -1,6 +1,6 @@
 package com.profile.controller;
 
-import com.profile.models.dto.userDTO.ProfileDTO;
+import com.profile.models.dto.userDTO.UserProfileDTO;
 import com.profile.models.dto.userDTO.UserLoginDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.service.serviceAnotation.UserService;
@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -22,6 +24,14 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    @GetMapping("/search")
+    public String getAllRegisteredUsersPage(Model model){
+        if (!model.containsAttribute("allUsers")){
+            model.addAttribute("allUsers", this.userService.viewAllRegisteredUsers());
+        }
+        return "all-users";
+    }
 
     @GetMapping("/")
     public String getIndexPage() {
@@ -48,7 +58,7 @@ public class UserController {
     @PostMapping("/register")
     public String postRegisterPage(@Valid UserRegisterDTO userRegisterDTO,
                                    BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes, @RequestParam MultipartFile projectImage) {
 
         if (this.userService.isUsernameValid(userRegisterDTO)) {
             bindingResult.rejectValue("username", "usedUsername", "Username exist or is less than 5 symbols!");
@@ -59,7 +69,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
             return "redirect:/register";
         }
-        this.userService.userRegister(userRegisterDTO);
+        this.userService.userRegister(userRegisterDTO,projectImage);
 
         return "index";
 
@@ -95,7 +105,7 @@ public class UserController {
 
 
     @PostMapping ("/{userId}/profile/edit")
-    public String postProfileInfoPage(@PathVariable Long userId, ProfileDTO profileDTO,
+    public String postProfileInfoPage(@PathVariable Long userId, UserProfileDTO profileDTO,
                                       BindingResult bindingResult,
                                       RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
@@ -111,7 +121,7 @@ public class UserController {
     @GetMapping("/all")
     public String getAllUsersPage(Model model){
         if (!model.containsAttribute("allUsers")){
-            model.addAttribute("allUsers", this.userService.allUsers());
+            model.addAttribute("allUsers", this.userService.getAllUsers());
         }
         return "all-registered-users";
     }

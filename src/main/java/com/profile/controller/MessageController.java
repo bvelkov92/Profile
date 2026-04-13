@@ -51,4 +51,12 @@ public class MessageController {
         model.addAttribute("getLoggedUserMessages");
         return "messages";
     }
+
+    @GetMapping("/messages/{id}")
+    public String deleteSelectedMessage(@PathVariable Long id){
+        this.messageService.deleteMessage(id);
+        return "redirect:/profile/messages";
+    }
+
+
 }

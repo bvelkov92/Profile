@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProfileDTO {
+public class UserProfileDTO {
 
     private String imageUrl;
 

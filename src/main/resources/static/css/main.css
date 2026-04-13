@@ -2132,6 +2132,11 @@ input, select, textarea {
 
 }
 
+.card-img-top {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
 
 .dropdown {
     position: relative;

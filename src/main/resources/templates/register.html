@@ -14,7 +14,8 @@
                 <form
                         th:method="post"
                         th:action="@{/register}"
-                        th:object = "${userRegisterDTO}">
+                        th:object = "${userRegisterDTO}"
+                        enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-6 col-12-small">
                             <input th:field="*{username}"
@@ -61,6 +62,12 @@
                             <p class="invalid-feedback errors alert alert-danger">
                                 This email has been used!
                             </p>
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><h4>Add Image</h4></li>
+                                <li> <input type="file" id="projectImage" name="projectImage"></li>
+                            </ul>
                         </div>
 
                         <div class="col-12">

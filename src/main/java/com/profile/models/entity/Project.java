@@ -12,10 +12,13 @@ public class Project extends BaseEntity {
     @NotBlank
     private String projectName;
 
+    @Column
     private String projectDescription;
 
+    @Column
     private String projectImage;
 
+    @Column
     private String projectGitHubLink;
 
     @ManyToOne

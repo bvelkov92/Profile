@@ -10,7 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -46,18 +48,18 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<LoggedUserMessagesDTO> getAllMyMessages(String username) {
-        User foundUser = this.userRepository.findByUsername(username).orElse(null);
-       return this.messageRepository
-                .findAllBySenderOrReceiver(foundUser, foundUser)
-                .stream()
+        User senderAndReceiver = this.userRepository.findByUsername(username).orElse(null);
 
 
-                .map(message -> new LoggedUserMessagesDTO(
+        return this.messageRepository
+                .findAllBySenderOrReceiver(senderAndReceiver, senderAndReceiver)
+                .stream().map(message -> new LoggedUserMessagesDTO(
+                        message.getId(),
                         message.getSender().getUsername(),
-                        message.getSentAt().toString(),
-                        message.getText()))
-                .toList();
-
+                        message.getReceiver().getUsername(),
+                        message.getText(),
+                        message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
+                )).toList();
     }
 
     @Override
@@ -65,6 +67,11 @@ public class MessageServiceImpl implements MessageService {
         User foundUser = this.userRepository.findByUsername(username).orElse(null);
        return this.messageRepository.findAllByReceiver(foundUser)
                 .stream().anyMatch(message -> !message.isSeenForReceiver());
+    }
+
+    @Override
+    public void deleteMessage(Long id) {
+        this.messageRepository.deleteById(id);
     }
 }
 

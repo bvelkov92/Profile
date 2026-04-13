@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="~{fragments/head}">
 </head>
 <body>
@@ -11,6 +11,7 @@
         <thead>
         <tr>
           <th><h4>From:</h4></th>
+          <th><h4>To:</h4></th>
           <th><h4>Message</h4></th>
           <th><h4>Date</h4></th>
           <th><h4>Functions</h4></th>
@@ -19,8 +20,14 @@
         <tbody>
         <tr th:each = "message : ${getLoggedUserMessages}">
           <td th:text="${message.sender}"></td>
-          <td th:text="${message.text}"></td>
+          <td th:text="${message.receiver}"></td>
+          <td th:text="${message.getShortText}"></td>
           <td th:text="${message.sentAt}"></td>
+          <td> <a th:href="@{/profile/messages/{id}(id=${message.id})}">
+            <img class="avatar" th:src="@{/images/recycle-bin.jpg}" alt="noImg"></a>
+          </td>
+<!--          <td th:text="${message.sentAt}"></td>-->
+<!--          <td th:text="${message.sentAt}"></td>-->
         </tr>
         </tbody>
       </table>

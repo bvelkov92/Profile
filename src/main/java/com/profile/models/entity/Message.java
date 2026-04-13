@@ -1,5 +1,6 @@
 package com.profile.models.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
@@ -18,12 +19,16 @@ public class Message extends BaseEntity{
     @ManyToOne
     private User receiver;
 
+    @Column(columnDefinition = "TEXT")
     private String text;
 
+    @Column
     private LocalDateTime sentAt;
 
+    @Column
     private boolean isSeenForSender;
 
+    @Column
     private boolean isSeenForReceiver;
 
 }
