@@ -29,25 +29,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-    ////============== MODEL ATTRIBUTES ======================
-    @ModelAttribute("getAllRoles")
-    public RolesEnum[] rolesEnums(){
-        return RolesEnum.values();
-    }
-
-    @ModelAttribute("getAdminFunction")
-    public List<String> adminFunctions() {
-        return List.of("Change role", "Delete user", "Ban user", "Unban user");
-    }
-
-    @ModelAttribute("userId")
-    public Long getLoggedUserId(Principal principal) {
-        if (principal != null) {
-            String user = principal.getName();
-            return this.userService.getUserByUsername(user).getId();
-        }
-        return null;
-    }
 
 
     @GetMapping("/panel")

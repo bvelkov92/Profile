@@ -39,6 +39,16 @@
         </form>
       </ul>
     </li>
+    <li sec:authorize="isAuthenticated()">
+      <a th:href="@{/profile/messages}">
+        <img th:unless= "${hasUnreadMessages}"
+             class="avatar"
+             th:src="@{/images/read-messages.jpg}" alt="noImg">
+        <img th:if= "${hasUnreadMessages}"
+             class="avatar"
+             th:src="@{/images/unread-messages.png}" alt="noImg">
+      </a>
+    </li>
   </ul>
 </nav>
 </div>

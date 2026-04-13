@@ -23,15 +23,6 @@ public class ProjectController {
         this.userService = userService;
     }
 
-    ////============== MODEL ATTRIBUTES ======================
-    @ModelAttribute("userId")
-    public Long getLoggedUserId(Principal principal) {
-        if (principal != null) {
-            String user = principal.getName();
-            return this.userService.getUserByUsername(user).getId();
-        }
-        return null;
-    }
 
     ////============= GET MAPPINGS   AND   POST MAPPINGS ============================
 

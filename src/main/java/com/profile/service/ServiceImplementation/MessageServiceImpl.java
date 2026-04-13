@@ -1,5 +1,6 @@
 package com.profile.service.ServiceImplementation;
 
+import com.profile.models.dto.MessageDTO.LoggedUserMessagesDTO;
 import com.profile.models.entity.Message;
 import com.profile.models.entity.User;
 import com.profile.repository.MessageRepository;
@@ -9,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -34,14 +36,35 @@ public class MessageServiceImpl implements MessageService {
         if (receiver!=null){
             newMessage.setReceiver(receiver);
         }
-        newMessage.setItSeen(false);
+        newMessage.setSeenForSender(true);
+        newMessage.setSeenForReceiver(false);
         newMessage.setText(message);
         newMessage.setSentAt(LocalDateTime.now());
 
-        System.out.println("Check result");
-
         this.messageRepository.save(modelMapper.map(newMessage, Message.class));
+         }
 
-        //TODO: To add message Icon in NAV and show unseen messages
+    @Override
+    public List<LoggedUserMessagesDTO> getAllMyMessages(String username) {
+        User foundUser = this.userRepository.findByUsername(username).orElse(null);
+       return this.messageRepository
+                .findAllBySenderOrReceiver(foundUser, foundUser)
+                .stream()
+
+
+                .map(message -> new LoggedUserMessagesDTO(
+                        message.getSender().getUsername(),
+                        message.getSentAt().toString(),
+                        message.getText()))
+                .toList();
+
+    }
+
+    @Override
+    public boolean hasUnreadMessages(String username) {
+        User foundUser = this.userRepository.findByUsername(username).orElse(null);
+       return this.messageRepository.findAllByReceiver(foundUser)
+                .stream().anyMatch(message -> !message.isSeenForReceiver());
     }
 }
+
