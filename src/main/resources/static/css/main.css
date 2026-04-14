@@ -2037,11 +2037,11 @@ input, select, textarea {
 
 		.wrapper.style1 {
 			background-image: none;
-			background-color: #fff;
+			background-color: #6ec161;
 		}
 
 		.wrapper.style2 {
-			background-color: #fafafa;
+			background-color: #6ec161;
 			text-shadow: 1px 1px 0px #fff;
 		}
 
@@ -2051,7 +2051,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style4 {
-			background-color: #303030;
+			background-color: #6ec161;
 			color: #999;
 			text-shadow: -1px -1px 0px #181818;
 		}
