@@ -16,28 +16,34 @@
     <li sec:authorize="!isAuthenticated()"><a th:href="@{register}">Register</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
     <li sec:authorize="isAuthenticated()"><a th:href="@{/contact}">Contacts</a></li>
-    <li id="logout">
-    <li  class="dropdown" sec:authorize="isAuthenticated()">
-    <a th:href="@{/{id}/profile(id=${userId})}"><img class="avatar" th:src="@{/images/pic00.jpg}" alt="noIMG"> Profile</a>
+    <li class="dropdown" sec:authorize="isAuthenticated()">
+      <a th:href="@{/{id}/profile(id=${userId})}">
+        <img class="avatar" th:src="@{/images/pic00.jpg}" alt="">
+        Profile
+      </a>
+
       <ul class="dropdown-menu">
-        <li sec:authorize="hasRole('ADMIN')">
+        <li  sec:authorize="hasRole('ADMIN')">
           <a th:href="@{/admin/panel}">Administration</a>
         </li>
-        <li sec:authorize="isAuthenticated()">
 
+        <li>
+          <a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a>
         </li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a></li>
-        <li sec:authorize="isAuthenticated()">
+
+        <li>
           <a th:href="@{/{id}/password(id=${userId})}">Change Password</a>
         </li>
+
         <li sec:authorize="hasRole('ADMIN')">
           <a th:href="@{/all}">Registered users</a>
         </li>
-        <form sec:authorize="isAuthenticated()"
-              th:action="@{/logout}"
-              th:method="post">
-          <button type="submit">Logout</button>
-        </form>
+
+        <li>
+          <form class="logout" th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+          </form>
+        </li>
       </ul>
     </li>
     <li sec:authorize="isAuthenticated()">

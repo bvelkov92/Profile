@@ -14,18 +14,18 @@
         <div th:each="user : ${allUsers}"
              class="col-sm-6 col-md-3 col-lg-2 mb-4">
 
-            <div class="offer card p-0">
-
-                <div class="card-body pb-1">
-                    <img class="card-img-top"
+            <div class="profile-card">
+                    <img class="image-profile"
                          th:src="@{'/uploads/' + ${user.image}}"
                          alt="profileImage">
-                </div>
-
-                <div class="card-body pb-1">
-                    <h5 class="card-title">
-                        <span th:text="${user.username}"></span>
-                    </h5>
+                <div class="info">
+                    <p><b>User:</b> <span th:text="${user.username}"></span></p>
+                    <p><b>User:</b> <span th:text="${user.username}"></span></p>
+                    <p><b>User:</b> <span th:text="${user.username}"></span></p>
+                    <p><b>User:</b> <span th:text="${user.username}"></span></p>
+<!--                    <p><b>City:</b> <span th:text="${user.city}"></span></p>-->
+<!--                    <p><b>Age:</b> <span th:text="${user.age}"></span></p>-->
+<!--                    <p><b>Role:</b> <span th:text="${user.role}"></span></p>-->
                 </div>
             </div>
         </div>
