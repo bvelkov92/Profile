@@ -2120,6 +2120,22 @@ input, select, textarea {
 			white-space: nowrap;
 		}
 
+		.btn-as-img {
+            background: none;    /* Премахва сивия фон */
+            border: none;        /* Премахва рамката */
+            padding: 0;          /* Премахва вътрешното разстояние */
+            cursor: pointer;     /* Слага ръчичка при посочване */
+            outline: none;       /* Премахва синята рамка при клик */
+            width: 30px;
+            height: 50px;
+        }
+
+        /* Правим снимката вътре да се държи нормално */
+        .btn-as-img img {
+            display: block;      /* Премахва празното място под снимката */
+            pointer-events: none; /* Казва на клика да отива директно към бутона */
+        }
+
 
 .avatar {
     width: 30px;

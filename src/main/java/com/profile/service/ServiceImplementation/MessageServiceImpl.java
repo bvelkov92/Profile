@@ -58,7 +58,8 @@ public class MessageServiceImpl implements MessageService {
                         message.getSender().getUsername(),
                         message.getReceiver().getUsername(),
                         message.getText(),
-                        message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
+                        message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
+                        message.isSeenForReceiver()
                 )).toList();
     }
 

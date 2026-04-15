@@ -1,5 +1,7 @@
 package com.profile.models.dto.MessageDTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +16,7 @@ public class LoggedUserMessagesDTO {
     private String receiver;
     private String text;
     private String sentAt;
+    private boolean isSeenByReceiver;
 
 
     public String getShortText() {

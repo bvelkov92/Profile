@@ -52,7 +52,7 @@ public class MessageController {
         return "messages";
     }
 
-    @GetMapping("/messages/{id}")
+    @PostMapping("/messages/delete/{id}")
     public String deleteSelectedMessage(@PathVariable Long id){
         this.messageService.deleteMessage(id);
         return "redirect:/profile/messages";
