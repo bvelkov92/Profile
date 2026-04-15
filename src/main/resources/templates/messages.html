@@ -19,22 +19,21 @@
         </thead>
         <tbody>
         <tr th:each = "message : ${getLoggedUserMessages}"
-            th:onclick="|window.location.href='/profile/messages/${message.id}'|"
-            style="cursor: pointer;">
+            th:onclick="|window.location.href='/profile/messages/${message.id}'|">
           <td th:text="${message.sender}"></td>
           <td th:text="${message.receiver}"></td>
-          <td th:text="${message.getShortText}"></td>
+          <td style="cursor: pointer;" th:text="${message.getShortText}"></td>
           <td th:text="${message.sentAt}"></td>
           <td style="width: 1%; white-space: nowrap;">
             <form
                     th:action="@{/profile/messages/delete/{id}(id=${message.id})}"
                     th:method="post"
                     style="display:inline;">
-              <button type="submit" class="btn-as-img" onclick="event.stopPropagation();">
+              <button class="avatar" type="submit" onclick="event.stopPropagation();">
                 <img class="avatar" th:src="@{/images/recycle-bin.jpg}" alt="Delete">
               </button>
             </form>
-            <img th:if="message.isSeenByReceiver==true" class="avatar" th:src="@{/images/closed-message.png}" alt="noImage">
+            <img  th:if="message.isSeenByReceiver==true" class="avatar" th:src="@{/images/closed-message.png}" alt="noImage">
             <img th:unless="message.isSeenByReceiver==true" class="avatar" th:src="@{/images/open-message.png}" alt="NoImage">
           </td>
         </tr>

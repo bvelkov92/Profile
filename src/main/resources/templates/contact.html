@@ -5,13 +5,14 @@
 <body>
 <div th:replace="~{fragments/nav}"></div>
 <article id="contact" class="wrapper style4">
-    <div class="container medium">
-        <header>
-            <h2>Have me make stuff for you.</h2>
-            <p>Ornare nulla proin odio consequat sapien vestibulum ipsum.</p>
-        </header>
-        <div class="row">
-            <div class="col-12">
+    <div class="form-wrapper">
+        <div class="contact-wrapper">
+
+            <div class="contact-header">
+                <h2>Have me make stuff for you.</h2>
+                <p>Ornare nulla proin odio consequat sapien vestibulum ipsum.</p>
+            </div>
+            <div class="contact-form">
                 <form method="post" action="#">
                     <div class="row">
                         <div class="col-6 col-12-small">
@@ -35,12 +36,10 @@
                     </div>
                 </form>
             </div>
-            <div th:replace="~{fragments/social}"></div>
+
         </div>
         <footer>
-            <ul id="copyright">
-                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            </ul>
+            <div th:replace="~{fragments/social}"></div>
         </footer>
     </div>
 </article>
