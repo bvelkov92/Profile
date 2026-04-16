@@ -168,7 +168,124 @@ li .dropdown {
     width: 400px;
 }
 
-.social{
-display: flex;
-gap: 50px;
+.social {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: left; /* Може да го смените на center */
+
+    /* Промяна на цвета */
+    color: #ffffff !important;
+}
+
+
+.icon:before {
+    font-family: "Font Awesome 5 Brands";
+    font-weight: 400;
+}
+
+ul {
+list-style: none;
+}
+
+/* 1. Контейнерът (Черното квадратче) */
+form {
+    background-color: rgba(0, 0, 0, 0.85); /* Тъмно и леко прозрачно */
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 40px auto; /* Центрира формата хоризонтално */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 2. Стил за инпут полетата (Username и Password) */
+form input,
+form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Почти прозрачен фон */
+    border: none;
+    border-bottom: 2px solid #555; /* Линия само отдолу */
+    color: white;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Ефект при кликване в полето */
+form input:focus {
+    border-bottom-color: #00d4ff; /* Промяна на цвета на линията */
+}
+
+/* 3. Стил за бутона Login */
+.actions {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #00d4ff; /* Син цвят */
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0099cc;
+    transform: translateY(-2px); /* Леко изскачане нагоре */
+}
+
+.invalid-feedback, div[style*="color:red"] {
+    font-size: 0.85em;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+form header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+form header h2 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.8em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+form header h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: #00d4ff; /* Синият цвят от бутона ти */
+    margin: 10px auto 0;
+}
+
+.actions, .actions li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+form input[type="submit"] {
+    margin-top: 10px; /* регулирай това за разстоянието над бутона */
 }
