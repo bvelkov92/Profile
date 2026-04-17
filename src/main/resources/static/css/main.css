@@ -199,10 +199,10 @@ list-style: none;
 /* 1. Контейнерът (Черното квадратче) */
 form {
     background-color: rgba(0, 0, 0, 0.85); /* Тъмно и леко прозрачно */
-    padding: 30px;
+    padding: 0px;
     border-radius: 10px;
     max-width: 400px;
-    margin: 40px auto; /* Центрира формата хоризонтално */
+    margin: -8px auto; /* Центрира формата хоризонтално */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -233,7 +233,7 @@ form input:focus {
     margin-top: 10px;
 }
 
-form input[type="submit"] {
+form input[type="submit"]{
     width: 100%;
     padding: 12px;
     background-color: #00d4ff; /* Син цвят */
@@ -289,3 +289,21 @@ form header h2::after {
 form input[type="submit"] {
     margin-top: 10px; /* регулирай това за разстоянието над бутона */
 }
+
+#logout{
+     width: 42%;
+     padding: 12px 15px;
+     color: #fff;
+     margin: 0px 0px -10px 2px;
+     background: #160c0c;   /* син цвят */
+     border: none;
+     border-radius: 6px;
+     text-align: left;
+     cursor: pointer;
+     font-weight: bold;
+ }
+
+ #logout:hover{
+     background: #222;
+     border-radius: 5px;
+ }
