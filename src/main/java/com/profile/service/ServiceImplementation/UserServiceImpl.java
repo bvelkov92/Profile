@@ -2,6 +2,7 @@ package com.profile.service.ServiceImplementation;
 
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
 import com.profile.models.dto.userDTO.AllUsersDTO;
+import com.profile.models.dto.userDTO.MyProfileDTO;
 import com.profile.models.dto.userDTO.UserProfileDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
@@ -9,6 +10,7 @@ import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.BlackListService;
 import com.profile.service.serviceAnotation.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,12 +28,14 @@ public class UserServiceImpl implements  UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final BlackListService blackListService;
+    private final ModelMapper modelMapper;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, BlackListService blackListService) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, BlackListService blackListService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.blackListService = blackListService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -116,6 +120,14 @@ public class UserServiceImpl implements  UserService {
     @Override
     public User getUserById(Long id) {
         return this.userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public MyProfileDTO getProfilInfo(Long id) {
+        User thisUser = this.userRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("User not found"));
+            return  modelMapper.map(thisUser, MyProfileDTO.class);
+
     }
 
     @Override

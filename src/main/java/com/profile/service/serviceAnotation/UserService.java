@@ -1,6 +1,7 @@
 package com.profile.service.serviceAnotation;
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
 import com.profile.models.dto.userDTO.AllUsersDTO;
+import com.profile.models.dto.userDTO.MyProfileDTO;
 import com.profile.models.dto.userDTO.UserProfileDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
@@ -17,6 +18,7 @@ public interface UserService {
     List<User> getAllUsers();
     List<AllUsersDTO> viewAllRegisteredUsers();
     User getUserById(Long id);
+    MyProfileDTO getProfilInfo(Long id);
 
     void changeUserInfo(UserProfileDTO profileDTO);
 }

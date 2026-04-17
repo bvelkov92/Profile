@@ -4,38 +4,24 @@
 </head>
 <body>
 <div th:replace="~{fragments/nav}"></div>
-<article id="contact" class="wrapper style4">
-    <div class="container medium">
-        <div class="row" th:object="${profileDTO}">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6"> <h4>Username:</h4></div>
-                    <div class="col-6"><span style="display:inline" th:text="*{username}"></span></div>
-
-                    <div class="col-12"><h4>Email:  </h4><span th:text="*{email}"></span></div>
-
-                    <div class="col-12"><h4>First name:  </h4><span th:text="*{firstName}"></span></div>
-
-                    <div class="col-12"><h4>Middle name:  </h4><span th:text="*{middleName}"></span></div>
-
-                    <div class="col-12"><h4>Last name:  </h4><span th:text="*{lastName}"></span></div>
-
-                        <div class="col-12">
-                            <ul class="actions">
-                                <li><a th:href="@{/{id}/profile/edit(id=${userId})}" class="button">Edit Profile</a></li>
-                            </ul>
-                        </div>
-                    </div>
-            </div>
-            <div th:replace="~{fragments/social}"></div>
+<div class="container-fluid">
+    <div class="my-profile-card">
+        <img class="image-profile"
+             th:src="@{'/uploads/' + ${profileDTO.image}}"
+             alt="profileImage">
+        <div class="info">
+            <p><b>User:</b> <span th:text="${profileDTO.username}"></span></p>
+            <p><b>Email:</b> <span th:text="${profileDTO.email}"></span></p>
+<!--            <p><b>User:</b> <span th:text="${profileDTO.username}"></span></p>-->
+            <p><b>Role:</b> <span th:text="${profileDTO.role}"></span></p>
+            <!--                    <p><b>City:</b> <span th:text="${user.city}"></span></p>-->
+            <!--                    <p><b>Age:</b> <span th:text="${user.age}"></span></p>-->
+            <!--                    <p><b>Role:</b> <span th:text="${user.role}"></span></p>-->
         </div>
-        <footer>
-            <ul id="copyright">
-                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            </ul>
-        </footer>
     </div>
-</article>
+    </div>
+</div>
+
 
 <!-- Scripts -->
 <script th:src="@{/js/jquery.min.js}"></script>
