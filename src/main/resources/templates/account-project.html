@@ -114,12 +114,15 @@
             <span class="value" th:text="${user.lastName}"></span>
         </div>
     </div>
-
     <a th:href="@{/profile/edit}">
         <button class="btn">Edit Profile</button>
     </a>
-
 </div>
-
+<footer>
+    <div th:replace="~{fragments/social}"></div>
+    <ul id="copyright">
+        <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
+    </ul>
+</footer>
 </body>
 </html>

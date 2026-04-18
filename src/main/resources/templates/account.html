@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head}">
-</head>
+<head th:replace="~{fragments/head}"></head>
 <body>
 <div th:replace="~{fragments/nav}"></div>
 <div class="container-fluid">
@@ -20,9 +19,13 @@
         </div>
     </div>
     </div>
-</div>
 
-
+<footer>
+    <div th:replace="~{fragments/social}"></div>
+    <ul id="copyright">
+        <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
+    </ul>
+</footer>
 <!-- Scripts -->
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/jquery.scrolly.min.js}"></script>

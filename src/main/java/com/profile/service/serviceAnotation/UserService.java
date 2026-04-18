@@ -1,9 +1,6 @@
 package com.profile.service.serviceAnotation;
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
-import com.profile.models.dto.userDTO.AllUsersDTO;
-import com.profile.models.dto.userDTO.MyProfileDTO;
-import com.profile.models.dto.userDTO.UserProfileDTO;
-import com.profile.models.dto.userDTO.UserRegisterDTO;
+import com.profile.models.dto.userDTO.*;
 import com.profile.models.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +15,8 @@ public interface UserService {
     List<User> getAllUsers();
     List<AllUsersDTO> viewAllRegisteredUsers();
     User getUserById(Long id);
-    MyProfileDTO getProfilInfo(Long id);
+    MyProfileDTO getProfileInfo(Long id);
+    void changeMyPassword(ChangeMyPasswordDTO changeMyPasswordDTO);
 
     void changeUserInfo(UserProfileDTO profileDTO);
 }

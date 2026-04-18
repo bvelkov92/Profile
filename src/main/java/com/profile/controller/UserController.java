@@ -1,5 +1,6 @@
 package com.profile.controller;
 
+import com.profile.models.dto.userDTO.ChangeMyPasswordDTO;
 import com.profile.models.dto.userDTO.UserProfileDTO;
 import com.profile.models.dto.userDTO.UserLoginDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
@@ -134,5 +135,34 @@ public class UserController {
         return "other-account-view";
     }
 
+    @GetMapping("/{id}/password")
+    public String getChangeMyPasswordPage(@PathVariable Long id, Model model){
+        if (!model.containsAttribute("changePassword")){
+            model.addAttribute("changePassword", new ChangeMyPasswordDTO());
+        }
 
+        return "change-my-password.html";
+    }
+
+    @PostMapping("/{id}/password")
+    public String postChangeMyPasswordPage(@PathVariable Long id,
+                                           @Valid ChangeMyPasswordDTO changeMyPasswordDTO,
+                                           BindingResult bindingResult,
+                                           RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("changePassword", changeMyPasswordDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePassword", bindingResult);
+
+            return "redirect:/" + id +"/password";
+        }
+
+        try {
+            this.userService.changeMyPassword(changeMyPasswordDTO);
+            return "redirect:/";
+        } catch (RuntimeException message) {
+            redirectAttributes.addFlashAttribute("changePassword", changeMyPasswordDTO);
+            redirectAttributes.addFlashAttribute("invalidPassword", true);
+            return "redirect:/" + id + "/password";
+        }
+    }
 }
