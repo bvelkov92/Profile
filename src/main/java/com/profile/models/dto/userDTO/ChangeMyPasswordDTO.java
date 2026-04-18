@@ -15,8 +15,7 @@ public class ChangeMyPasswordDTO {
 
     @CheckCurrentPasswordValidation
     private String oldPassword;
-    
- // TODO: Да проверя какво запаметява като парола!
+
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String newPassword;
     private String confirmPassword;
