@@ -134,7 +134,7 @@ public class UserServiceImpl implements  UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = this.userRepository.findByUsername(username).get();
-        user.setPassword(changeMyPasswordDTO.getNewPassword());
+        user.setPassword(passwordEncoder.encode(changeMyPasswordDTO.getNewPassword()));
         this.userRepository.save(user);
     }
 

@@ -41,20 +41,19 @@
                             </p>
                         </div>
                         <div class="col-6 col-12-small">
-                            <input type="password"
-                                   name="confirmPassword"
-                                   th:field="*{confirmPassword}"
-                                   id="confirmPassword"
-                                   placeholder="Confirm password"
-                                   th:errorclass="is-invalid"/>
+                            <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    th:field="*{confirmPassword}"
+                                    id="confirmPassword"
+                                    placeholder="Confirm password"
+                                    th:errorclass="is-invalid"/>
                             <p class="invalid-feedback errors alert alert-danger">
-                                The passwords are not equals!
+                                Password must be between 6 and 20 symbols!
                             </p>
                         </div>
-
                         <div class="col-6 col-12-small">
-                            <input type="text"
-                                   name="email"
+                            <input type="text" name="email"
                                    th:field="*{email}"
                                    id="email"
                                    placeholder="Email"
