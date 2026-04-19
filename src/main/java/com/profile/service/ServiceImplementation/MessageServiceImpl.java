@@ -72,10 +72,20 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public boolean hasUnreadMessages(String username) {
         User foundUser = this.userRepository.findByUsername(username).orElse(null);
+
+        List<Message> list = this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
+                .stream()
+                .filter(message -> message.getReceiver().getUsername().equals(username)
+                        || message.getSender().getUsername().equals("NotRegister"))
+                .filter(message -> !message.isSeenFromReceiver()).toList();
+
+        System.out.println("dasdasdasdasdasdas");
+
         return this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
                 .stream()
-                .filter(message -> !message.getSender().getUsername().equals(username))
-                .anyMatch(Message::isSeenFromReceiver);
+                .filter(message -> message.getReceiver().getUsername().equals(username)
+                        || message.getSender().getUsername().equals("NotRegister"))
+                .anyMatch(message -> !message.isSeenFromReceiver());
     }
 
     @Override

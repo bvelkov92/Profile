@@ -40,11 +40,11 @@
               <button>
                 <img th:if="${message.isSeenByReceiver}"
                    class="avatar"
-                   th:src="@{/images/closed-message.png}" alt="NoImg">
+                   th:src="@{/images/open-message.png}" alt="NoImg">
 
               <img th:unless="${message.isSeenByReceiver}"
                    class="avatar"
-                   th:src="@{/images/open-message.png}" alt="NoImg">
+                   th:src="@{/images/closed-message.png}" alt="NoImg">
               </button>
             </form>
           </td>
