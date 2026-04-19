@@ -56,7 +56,8 @@ public class MessageServiceImpl implements MessageService {
         User senderAndReceiver = this.userRepository.findByUsername(username).orElse(null);
         return this.messageRepository
                 .findAllBySenderOrReceiver(senderAndReceiver, senderAndReceiver)
-                .stream().map(message -> new LoggedUserMessagesDTO(
+                .stream()
+                .map(message -> new LoggedUserMessagesDTO(
                         message.getId(),
                         message.getSender().getUsername(),
                         message.getReceiver().getUsername(),
@@ -66,20 +67,11 @@ public class MessageServiceImpl implements MessageService {
                         message.isSeenFromReceiver(),
                         message.isSeenFromSender()
                 )).toList();
-
     }
 
     @Override
     public boolean hasUnreadMessages(String username) {
         User foundUser = this.userRepository.findByUsername(username).orElse(null);
-
-        List<Message> list = this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
-                .stream()
-                .filter(message -> message.getReceiver().getUsername().equals(username)
-                        || message.getSender().getUsername().equals("NotRegister"))
-                .filter(message -> !message.isSeenFromReceiver()).toList();
-
-        System.out.println("dasdasdasdasdasdas");
 
         return this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
                 .stream()
@@ -115,13 +107,11 @@ public class MessageServiceImpl implements MessageService {
 
             User anonymousUser = this.userRepository.findByUsername("NotRegister").get();
             msg.setSenderName(anonymousUser);
-
             msg.setSeenFromSender(true);
             msg.setSeenFromReceiver(false);
             msg.setSentAt(LocalDateTime.now());
             Message mappedMessage = this.modelMapper.map(msg, Message.class);
             mappedMessage.setText(sendMessageToAllAdminsDTO.getMessage());
-
             messageRepository.save(mappedMessage);
             });
         }

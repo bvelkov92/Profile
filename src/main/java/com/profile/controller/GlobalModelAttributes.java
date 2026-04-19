@@ -4,6 +4,7 @@ import com.profile.models.dto.MessageDTO.LoggedUserMessagesDTO;
 import com.profile.models.enums.RolesEnum;
 import com.profile.service.serviceAnotation.MessageService;
 import com.profile.service.serviceAnotation.UserService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -41,7 +42,7 @@ public class GlobalModelAttributes {
     }
 
     @ModelAttribute("getLoggedUserMessages")
-    public List<LoggedUserMessagesDTO> getLoggedUserMessages(Principal principal){
+    public List<LoggedUserMessagesDTO> getLoggedUserMessages(Principal principal, Model model){
         if (principal==null){
             return List.of();
         }
