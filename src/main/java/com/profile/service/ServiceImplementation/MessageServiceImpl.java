@@ -1,6 +1,7 @@
 package com.profile.service.ServiceImplementation;
 
 import com.profile.models.dto.MessageDTO.LoggedUserMessagesDTO;
+import com.profile.models.dto.MessageDTO.MessageDTO;
 import com.profile.models.dto.MessageDTO.MessageToAdminsDTO;
 import com.profile.models.dto.userDTO.SendMessageToAllAdminsDTO;
 import com.profile.models.entity.Message;
@@ -33,19 +34,19 @@ public class MessageServiceImpl implements MessageService {
 
         User sender = this.userRepository.findByUsername(senderByLogin).orElse(null);
         User receiver = this.userRepository.findById(receiverById).orElse(null);
-        Message newMessage = new Message();
+        MessageDTO newMessage = new MessageDTO();
         if (sender != null) {
             newMessage.setSender(sender);
-            newMessage.setEmail(sender.getEmail());
         }
         if (receiver != null) {
             newMessage.setReceiver(receiver);
         }
-        newMessage.setSeenForSender(true);
-        newMessage.setSeenForReceiver(false);
         newMessage.setText(message);
         newMessage.setSentAt(LocalDateTime.now());
         newMessage.setSubject(subject);
+        newMessage.setSeenFromSender(true);
+        newMessage.setSeenFromReceiver(false);
+
         this.messageRepository.save(modelMapper.map(newMessage, Message.class));
 
     }
@@ -53,26 +54,28 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<LoggedUserMessagesDTO> getAllMyMessages(String username) {
         User senderAndReceiver = this.userRepository.findByUsername(username).orElse(null);
-
-
         return this.messageRepository
                 .findAllBySenderOrReceiver(senderAndReceiver, senderAndReceiver)
                 .stream().map(message -> new LoggedUserMessagesDTO(
                         message.getId(),
-                        message.getSubject(),
                         message.getSender().getUsername(),
                         message.getReceiver().getUsername(),
                         message.getText(),
+                        message.getSubject(),
                         message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
-                        message.isSeenForReceiver()
+                        message.isSeenFromReceiver(),
+                        message.isSeenFromSender()
                 )).toList();
+
     }
 
     @Override
     public boolean hasUnreadMessages(String username) {
         User foundUser = this.userRepository.findByUsername(username).orElse(null);
-        return this.messageRepository.findAllByReceiver(foundUser)
-                .stream().anyMatch(message -> !message.isSeenForReceiver());
+        return this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
+                .stream()
+                .filter(message -> !message.getSender().getUsername().equals(username))
+                .anyMatch(Message::isSeenFromReceiver);
     }
 
     @Override
@@ -103,8 +106,8 @@ public class MessageServiceImpl implements MessageService {
             User anonymousUser = this.userRepository.findByUsername("NotRegister").get();
             msg.setSenderName(anonymousUser);
 
-            msg.setItSeenForSender(true);
-            msg.setItSeenFromReceiver(false);
+            msg.setSeenFromSender(true);
+            msg.setSeenFromReceiver(false);
             msg.setSentAt(LocalDateTime.now());
             Message mappedMessage = this.modelMapper.map(msg, Message.class);
             mappedMessage.setText(sendMessageToAllAdminsDTO.getMessage());
@@ -112,5 +115,12 @@ public class MessageServiceImpl implements MessageService {
             messageRepository.save(mappedMessage);
             });
         }
+
+    @Override
+    public void changeMessageStatus(Long id) {
+        Message message = this.messageRepository.findById(id).get();
+        message.setSeenFromReceiver(!message.isSeenFromReceiver());
+        this.messageRepository.save(message);
+    }
 
 }

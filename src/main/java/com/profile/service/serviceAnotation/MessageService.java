@@ -12,4 +12,5 @@ public interface MessageService {
     boolean hasUnreadMessages(String username);
     void deleteMessage(Long id);
     void sendMsgToAllAdmins(SendMessageToAllAdminsDTO sendMessageToAllAdminsDTO);
+    void changeMessageStatus(Long id);
 }

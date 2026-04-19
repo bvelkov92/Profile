@@ -22,7 +22,7 @@
             th:onclick="|window.location.href='/profile/messages/${message.id}'|">
           <td th:text="${message.sender}"></td>
           <td th:text="${message.receiver}"></td>
-          <td style="cursor: pointer;" th:text="${message.subject}"></td>
+          <td style="cursor: pointer;" th:text="${message.shortSubject}"></td>
           <td th:text="${message.sentAt}"></td>
           <td style="width: 1%; white-space: nowrap;">
             <form
@@ -33,8 +33,20 @@
                 <img class="avatar" th:src="@{/images/recycle-bin.jpg}" alt="Delete">
               </button>
             </form>
-            <img  th:if="message.isSeenByReceiver==true" class="avatar" th:src="@{/images/closed-message.png}" alt="noImage">
-            <img th:unless="message.isSeenByReceiver==true" class="avatar" th:src="@{/images/open-message.png}" alt="NoImage">
+            <form
+                    th:action="@{/profile/messages/check/{id}(id=${message.id})}"
+                    th:method="post"
+                    style="display:inline;">
+              <button>
+                <img th:if="${message.isSeenByReceiver}"
+                   class="avatar"
+                   th:src="@{/images/closed-message.png}" alt="NoImg">
+
+              <img th:unless="${message.isSeenByReceiver}"
+                   class="avatar"
+                   th:src="@{/images/open-message.png}" alt="NoImg">
+              </button>
+            </form>
           </td>
         </tr>
         </tbody>

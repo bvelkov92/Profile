@@ -21,7 +21,6 @@
         <img class="avatar" th:src="@{/images/pic00.jpg}" alt="">
         Profile
       </a>
-
       <ul class="dropdown-menu">
         <li  sec:authorize="hasRole('ADMIN')">
           <a th:href="@{/admin/panel}">Administration</a>
@@ -53,6 +52,7 @@
         <img th:unless= "${hasUnreadMessages}"
              class="avatar"
              th:src="@{/images/read-messages.jpg}" alt="noImg">
+
         <img th:if= "${hasUnreadMessages}"
              class="avatar"
              th:src="@{/images/unread-messages.png}" alt="noImg">

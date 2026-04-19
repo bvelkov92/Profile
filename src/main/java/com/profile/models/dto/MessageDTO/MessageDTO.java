@@ -16,14 +16,14 @@ public class MessageDTO {
 
     private User receiver;
 
-    private String message;
+    private String text;
 
     private LocalDateTime sentAt;
 
     private String subject;
 
-    private boolean itSeenForSender;
+    private boolean isSeenFromSender;
 
-    private boolean itSeenFromReceiver;
+    private boolean isSeenFromReceiver;
 
 }

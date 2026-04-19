@@ -18,9 +18,7 @@ public class MessageToAdminsDTO {
     private String message;
     private String subject;
     private LocalDateTime sentAt;
-
-    private boolean itSeenForSender;
-
-    private boolean itSeenFromReceiver;
+    private boolean isSeenFromSender;
+    private boolean isSeenFromReceiver;
 
 }

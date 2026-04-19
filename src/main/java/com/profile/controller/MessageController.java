@@ -3,7 +3,6 @@ package com.profile.controller;
 import com.profile.models.dto.MessageDTO.MessageDTO;
 import com.profile.models.dto.userDTO.SendMessageToAllAdminsDTO;
 import com.profile.service.serviceAnotation.MessageService;
-import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,25 +23,26 @@ public class MessageController {
 
 
     @GetMapping("/profile/{id}/send")
-    public String getSendMessagePage(Model model){
+    public String getSendMessagePage(@PathVariable Long id, Model model){
         if (!model.containsAttribute("messageDTO")){
             model.addAttribute("messageDTO", new MessageDTO());
         }
+        model.addAttribute("id", id);
         return "message-form";
     }
 
     @PostMapping("/profile/{id}/send")
     public String postSendMessagePage (@PathVariable Long id, MessageDTO messageDTO,
-                                       BindingResult bindingResult,
+                                           BindingResult bindingResult,
                                        RedirectAttributes redirectAttributes, Principal principal){
 
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("messageDTO", messageDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.messageDTO", bindingResult);
-            return "redirect:/profile/" +id +"send";
+            return "redirect:/profile/" +id +"/send";
         }
         String sender = principal.getName();
-        this.messageService.sendMsg(sender, id, messageDTO.getMessage(), messageDTO.getSubject());
+        this.messageService.sendMsg(sender, id, messageDTO.getText(), messageDTO.getSubject());
 
         return "redirect:/profile/" +id;
     }
@@ -80,4 +80,12 @@ public class MessageController {
         this.messageService.sendMsgToAllAdmins(sendMessageToAllAdminsDTO);
         return "redirect:/";
     }
+
+    @PostMapping("/profile/messages/check/{id}")
+    public String postChangeMessageStatus(@PathVariable Long id){
+        this.messageService.changeMessageStatus(id);
+        return "redirect:/profile/messages";
+    }
+
+
 }

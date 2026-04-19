@@ -34,10 +34,10 @@ public class Message extends BaseEntity{
     private LocalDateTime sentAt;
 
     @Column
-    private boolean isSeenForSender;
+    private boolean isSeenFromSender;
 
     @Column
-    private boolean isSeenForReceiver;
+    private boolean isSeenFromReceiver;
 
     private  String email;
 

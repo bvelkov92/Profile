@@ -103,7 +103,9 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return this.userRepository.findAll();
+        return this.userRepository.findAll().stream()
+                .filter(user -> !user.getUsername().equals("NotRegister"))
+                .toList();
     }
 
     @Override
@@ -112,8 +114,9 @@ public class UserServiceImpl implements  UserService {
                 user.getUsername(),
                 user.getImage(),
                 user.getAge(),
-                user.getCity()
-                )).toList();
+                user.getCity()))
+                .filter(user -> !user.getUsername().equals("NotRegister"))
+                .toList();
     }
 
     @Override
