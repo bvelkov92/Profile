@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 public class User extends BaseEntity {
 
-    @NotBlank
-    @Size (min = 5)
     @Column
     private String username;
 
@@ -48,5 +48,10 @@ public class User extends BaseEntity {
     @Column
     private Integer age;
 
+    @OneToMany(mappedBy = "sender")
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> receivedMessages;
 
 }

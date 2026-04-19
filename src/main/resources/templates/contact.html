@@ -4,28 +4,40 @@
 </head>
 <body>
 <div th:replace="~{fragments/nav}"></div>
-<article id="contact" class="wrapper style4">
-    <div class="form-wrapper">
-        <div class="contact-wrapper">
-
-            <div class="contact-header">
-                <h2>Have me make stuff for you.</h2>
-                <p>Ornare nulla proin odio consequat sapien vestibulum ipsum.</p>
+<article class="article">
+              <div class="contact-header">
+                <h2>Send message to all admins</h2>
             </div>
             <div class="contact-form">
-                <form method="post" action="#">
+                <form   th:method="post"
+                        th:action="@{/contact}"
+                        th:object="${sendMessageToAllAdminsDTO}">
                     <div class="row">
                         <div class="col-6 col-12-small">
-                            <input type="text" name="name" id="name" placeholder="Name" />
+                            <input type="text"
+                                   th:field="*{name}"
+                                   id="name"
+                                   placeholder="Your name" />
                         </div>
                         <div class="col-6 col-12-small">
-                            <input type="text" name="email" id="email" placeholder="Email" />
+                            <input type="text"
+                                   th:field="*{email}"
+                                   id="email"
+                                   placeholder="Contact email" />
                         </div>
                         <div class="col-12">
-                            <input type="text" name="subject" id="subject" placeholder="Subject" />
+                            <input type="text"
+                                   th:field="*{subject}"
+                                   id="subject"
+                                   placeholder="Subject" />
                         </div>
                         <div class="col-12">
-                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                            <textarea
+                                      id="message"
+                                      th:field="*{message}"
+                                      placeholder="Message">
+
+                            </textarea>
                         </div>
                         <div class="col-12">
                             <ul class="actions">
@@ -36,11 +48,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-        <footer>
-            <div th:replace="~{fragments/social}"></div>
-        </footer>
-    </div>
 </article>
 <!-- Scripts -->
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -49,5 +56,12 @@
 <script th:src="@{/js/breakpoints.min.js}"></script>
 <script th:src="@{/js/util.js}"></script>
 <script th:src="@{/js/main.js}"></script>
+
+<footer>
+    <div th:replace="~{fragments/social}"></div>
+    <ul id="copyright">
+        <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
+    </ul>
+</footer>
 </body>
 </html>

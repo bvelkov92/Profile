@@ -15,7 +15,7 @@
     <li sec:authorize="isAuthenticated()"><a th:href="@{/jobs}">Job offers</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{register}">Register</a></li>
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
-    <li sec:authorize="isAuthenticated()"><a th:href="@{/contact}">Contacts</a></li>
+    <li><a th:href="@{/contact}">Contacts</a></li>
     <li class="dropdown" sec:authorize="isAuthenticated()">
       <a th:href="@{/{id}/profile(id=${userId})}">
         <img class="avatar" th:src="@{/images/pic00.jpg}" alt="">

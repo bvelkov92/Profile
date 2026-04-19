@@ -18,6 +18,7 @@ public class LoginAndLogoutConfigurator {
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers( "/register", "/login").anonymous()
+                                .requestMatchers("/contact").permitAll()
                                 .requestMatchers("/projects").authenticated()
                                 .requestMatchers("/admin/panel").hasRole("ADMIN")
                                 .anyRequest().authenticated())

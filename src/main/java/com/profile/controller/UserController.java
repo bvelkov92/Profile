@@ -1,9 +1,6 @@
 package com.profile.controller;
 
-import com.profile.models.dto.userDTO.ChangeMyPasswordDTO;
-import com.profile.models.dto.userDTO.UserProfileDTO;
-import com.profile.models.dto.userDTO.UserLoginDTO;
-import com.profile.models.dto.userDTO.UserRegisterDTO;
+import com.profile.models.dto.userDTO.*;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -76,14 +73,10 @@ public class UserController {
 
     }
 
-    @GetMapping("/contact")
-    public String getContactPage(Model model) {
 
-        return "contact";
-    }
 
     @GetMapping("profile/work")
-    public String getWorkPage(Model model) {
+    public String getWorkPage() {
 
         return "work";
     }
@@ -113,10 +106,10 @@ public class UserController {
             redirectAttributes.addFlashAttribute("profileDTO", profileDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.profileDTO", bindingResult);
 
-            return "redirect:/" +userId +"/profile";
+            return "redirect:/" + userId + "/profile";
         }
             this.userService.changeUserInfo(profileDTO);
-        return "redirect:/" +userId +"/profile";
+        return "redirect:/" + userId + "/profile";
     }
 
     @GetMapping("/all")
@@ -136,7 +129,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/password")
-    public String getChangeMyPasswordPage(@PathVariable Long id, Model model){
+    public String getChangeMyPasswordPage(Model model){
         if (!model.containsAttribute("changePassword")){
             model.addAttribute("changePassword", new ChangeMyPasswordDTO());
         }
@@ -153,7 +146,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("changePassword", changeMyPasswordDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePassword", bindingResult);
 
-            return "redirect:/" + id +"/password";
+            return "redirect:/" + id + "/password";
         }
 
         try {
@@ -165,4 +158,6 @@ public class UserController {
             return "redirect:/" + id + "/password";
         }
     }
+
+
 }

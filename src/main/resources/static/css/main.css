@@ -23,6 +23,7 @@ body {
     padding: 20px;
     background: rgba(0,0,0,0.6);
     border-radius: 12px;
+    text-align: center;
 }
 
 /* TABLE */
@@ -96,9 +97,18 @@ body {
     object-fit: cover;
     transform: translateY(3px);
     cursor: pointer;
+    background: #fff;
+    margin: -1px;
 }
 
-
+#message{
+    margin: 0px;
+    padding: 0px;
+    background-color: #5f575752;
+    width: 400px;
+    height: 100px;
+    color: white;
+}
 
 .dropdown {
     position: relative;
@@ -167,15 +177,36 @@ li .dropdown {
     margin-top: 80px;
 }
 
+.article {
+display: flex;
+flex-direction: column;   /* едно под друго */
+align-items: center;      /* хоризонтално център */
+justify-content: center;  /* вертикално център */
+text-align: center;       /* текст в центъра */
+min-height: 65 vh;         /* да има височина за центриране */
+
+}
+
 /* текст горе */
 .contact-header {
     margin-bottom: 30px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* формата под него */
 .contact-form {
-    width: 400px;
+     width: 400px;
+     justify-content: center;
 }
+
+.header{
+text-align:center;
+margin-bottom: 20px;
+justify-content: center;
+}
+
 
 .social {
     list-style: none;
@@ -184,7 +215,7 @@ li .dropdown {
     justify-content: center;
 }
 footer {
-    position: fixed;
+    position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;

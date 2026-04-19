@@ -20,6 +20,8 @@ public class MessageDTO {
 
     private LocalDateTime sentAt;
 
+    private String subject;
+
     private boolean itSeenForSender;
 
     private boolean itSeenFromReceiver;

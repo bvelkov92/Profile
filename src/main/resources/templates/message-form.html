@@ -6,7 +6,7 @@
 <div th:replace="~{fragments/nav}"></div>
 <article id="contact" class="wrapper style4">
     <div class="container medium">
-        <header>
+        <header class="header">
             <h2>Send Message</h2>
         </header>
         <div class="row">
@@ -16,10 +16,10 @@
                       th:object="${messageDTO}">
                     <div class="row">
                         <div class="col-12">
-                            <input type="text" name="subject" id="subject" placeholder="Subject" />
+                            <input type="text" th:field="*{subject}" id="subject" placeholder="Subject" />
                         </div>
                         <div class="col-12">
-                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                            <textarea th:field="*{message}" id="message" placeholder="Message"></textarea>
                         </div>
                         <div class="col-12">
                             <ul class="actions">
@@ -29,13 +29,12 @@
                     </div>
                 </form>
             </div>
-            <div th:replace="~{fragments/social}"></div>
         </div>
     </div>
     <footer>
         <div th:replace="~{fragments/social}"></div>
         <ul id="copyright">
-            <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b>/button></li>
+            <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
         </ul>
     </footer>
 </article>
