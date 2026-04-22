@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<body>
+<div th:replace="~{fragments/nav}"></div>
+<article id="contact" class="wrapper style4">
+    <div class="table-wrapper">
+        <header class="header">
+            <h2>Message</h2>
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <form th:method="post"
+                      th:action="@{/profile/messages/{id}/send(id=${id})}"
+                      th:object="${viewMessageDTO}">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text"
+                                   th:field="*{subject}"
+                                   id="subject"
+                                   th:value="*{subject}"/>
+                        </div>
+                        <div class="col-12">
+                            <textarea
+                                    id="message"
+                                    th:field ="*{message}"
+                                    th:value="*{message}"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><input type="submit" value="Send Message" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div th:replace="~{fragments/social}"></div>
+        <ul id="copyright">
+            <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
+        </ul>
+    </footer>
+</article>
+<!-- Scripts -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.scrolly.min.js}"></script>
+<script th:src="@{/js/browser.min.js}"></script>
+<script th:src="@{/js/breakpoints.min.js}"></script>
+<script th:src="@{/js/util.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
