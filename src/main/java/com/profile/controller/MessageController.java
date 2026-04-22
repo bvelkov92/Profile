@@ -1,6 +1,7 @@
 package com.profile.controller;
 
 import com.profile.models.dto.MessageDTO.MessageDTO;
+import com.profile.models.dto.MessageDTO.ViewMessageDTO;
 import com.profile.models.dto.userDTO.SendMessageToAllAdminsDTO;
 import com.profile.service.serviceAnotation.MessageService;
 import jakarta.validation.Valid;
@@ -85,6 +86,20 @@ public class MessageController {
     public String postChangeMessageStatus(@PathVariable Long id){
         this.messageService.changeMessageStatus(id);
         return "redirect:/profile/messages";
+    }
+
+    @GetMapping("/profile/messages/{id}")
+    public String getViewMessagePage(@PathVariable Long id, Model model){
+        if (!model.containsAttribute("viewMessageDTO")){
+            model.addAttribute("viewMessageDTO", new ViewMessageDTO());
+        }
+        return "message-view";
+    }
+
+    @PostMapping("/profile/messages/{id}")
+    public String postViewMessagePage(@PathVariable Long id){
+
+        return null;
     }
 
 

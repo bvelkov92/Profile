@@ -21,8 +21,7 @@
           <td th:text="${user.username}"></td>
           <td th:text="${user.email}"></td>
           <td th:text="${user.role}"></td>
-          <td> <a th:href="@{/profile/{id}(id=${user.id})}">View Profile</a></td>
-          <td>
+          <td> <a th:href="@{/profile/{id}(id=${user.id})}">View Profile</a>
             <a th:href="@{/profile/{id}/send(id=${user.id})}">
               <img class="avatar" th:src="@{/images/read-messages.jpg}" alt="noIMG">
             </a>

@@ -84,13 +84,14 @@ public class UserController {
     @GetMapping("/{userId}/profile")
     public String getProfileInfoPage(@PathVariable Long userId, Model model) {
         if (!model.containsAttribute("profileDTO")) {
-            model.addAttribute("profileDTO", this.userService.getUserById(userId));
+            model.addAttribute("profileDTO", this.userService.getFullDataUserById(userId));
             }
             return "account";
         }
 
     @GetMapping("/{userId}/profile/edit")
     public String getChangeProfileInfoPage(@PathVariable Long userId, Model model){
+
         if (!model.containsAttribute("profileDTO")){
             model.addAttribute("profileDTO", this.userService.getUserById(userId));
         }

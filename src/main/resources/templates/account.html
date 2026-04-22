@@ -9,13 +9,14 @@
              th:src="@{'/uploads/' + ${profileDTO.image}}"
              alt="profileImage">
         <div class="info">
-            <p><b>User:</b> <span th:text="${profileDTO.username}"></span></p>
-            <p><b>Email:</b> <span th:text="${profileDTO.email}"></span></p>
-<!--            <p><b>User:</b> <span th:text="${profileDTO.username}"></span></p>-->
-            <p><b>Role:</b> <span th:text="${profileDTO.role}"></span></p>
-            <!--                    <p><b>City:</b> <span th:text="${user.city}"></span></p>-->
-            <!--                    <p><b>Age:</b> <span th:text="${user.age}"></span></p>-->
-            <!--                    <p><b>Role:</b> <span th:text="${user.role}"></span></p>-->
+            <p><b>User:</b> <p><span th:text="${profileDTO.username}"></span></p>
+            <p><b>Email:</b> <p><span th:text="${profileDTO.email}"></span></p>
+            <p><b>User:</b> <p><span th:text="${profileDTO.username}"></span></p>
+            <p><b>Role:</b></p> <p><span th:text="${profileDTO.role}"></span></p>
+            <p><b>City:</b></p>
+            <p th:unless="${profileDTO.city==null}"><span th:text="${user.city}"></span></p>
+            <p><b>Age:</b></p>
+            <p th:unless="${profileDTO.age==null}"><span th:text="${user.age}"></span></p>
         </div>
     </div>
     </div>

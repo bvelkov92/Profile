@@ -142,6 +142,12 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
+    public MyProfileDTO getFullDataUserById(Long userId) {
+        User myProfile = this.userRepository.findById(userId).get();
+       return modelMapper.map(myProfile, MyProfileDTO.class);
+    }
+
+    @Override
     public void changeUserInfo(UserProfileDTO profileDTO) {
        User foundUser = this.userRepository.findByUsername(profileDTO.getUsername().trim().toLowerCase()).orElse(null);
         if (foundUser!=null) {
