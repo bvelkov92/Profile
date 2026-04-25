@@ -19,6 +19,8 @@ public class Message extends BaseEntity{
     @JoinColumn(name = "sender_id")
     private User sender;
 
+    private String senderName;
+
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private User receiver;

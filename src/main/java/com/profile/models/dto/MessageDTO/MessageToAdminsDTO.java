@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MessageToAdminsDTO {
 
-    private User senderName;
-    private User receiver;
+    private String senderName;
+    private String receiver;
     private String senderEmail;
     private String message;
     private String subject;

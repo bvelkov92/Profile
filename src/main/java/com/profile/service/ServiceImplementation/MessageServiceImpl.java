@@ -11,6 +11,8 @@ import com.profile.repository.MessageRepository;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.MessageService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -99,19 +101,28 @@ public class MessageServiceImpl implements MessageService {
                     this.userRepository.save(anonymousUser);
                 }
 
+        Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = userRepository.findByUsername(authUser.getName()).orElse(null);
+
         allAdmins.forEach(admin -> {
             MessageToAdminsDTO msg = new MessageToAdminsDTO();
-            msg.setReceiver(admin);
-            msg.setSenderEmail(sendMessageToAllAdminsDTO.getEmail());
+            msg.setReceiver(admin.getUsername());
             msg.setSubject(sendMessageToAllAdminsDTO.getSubject());
-
-            User anonymousUser = this.userRepository.findByUsername("NotRegister").get();
-            msg.setSenderName(anonymousUser);
             msg.setSeenFromSender(true);
             msg.setSeenFromReceiver(false);
             msg.setSentAt(LocalDateTime.now());
             Message mappedMessage = this.modelMapper.map(msg, Message.class);
             mappedMessage.setText(sendMessageToAllAdminsDTO.getMessage());
+            if (loggedUser!=null) {
+                mappedMessage.setEmail(loggedUser.getEmail());
+                mappedMessage.setSender(loggedUser);
+                mappedMessage.setSenderName(loggedUser.getUsername());
+            }else {
+                User anonymousUser = this.userRepository.findByUsername("NotRegister").get();
+                mappedMessage.setSender(anonymousUser);
+                mappedMessage.setEmail(anonymousUser.getEmail());
+                mappedMessage.setSenderName(sendMessageToAllAdminsDTO.getName());
+            }
             messageRepository.save(mappedMessage);
             });
         }

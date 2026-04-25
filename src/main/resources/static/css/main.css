@@ -339,6 +339,24 @@ form input[type="submit"] {
     margin-top: 10px; /* регулирай това за разстоянието над бутона */
 }
 
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Почти прозрачен фон */
+    border: none;
+    border-bottom: 2px solid #555; /* Линия само отдолу */
+    color: white;
+    outline: none;
+    transition: border-color 0.3s;
+}
+select .option{
+    background: rgb(19 25 22 / 64%);
+    border-bottom: 2px solid #555;
+    color: white;
+}
+
+
 #logout{
      width: 42%;
      padding: 12px 15px;

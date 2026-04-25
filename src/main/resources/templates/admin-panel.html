@@ -16,8 +16,10 @@
                         th:object = "${functionsDTO}">
                     <div class="row">
                         <div  class="col-12">
-                            <select  th:field="*{functionName}">
-                                <option th:each = "currentFunction: ${getAdminFunction}"
+                            <select
+                                    th:field="*{functionName}">
+                                <option class="option"
+                                        th:each = "currentFunction: ${getAdminFunction}"
                                 th:value = "${currentFunction}"
                                 th:text = "${currentFunction}"
                                 >Select Function</option>
@@ -25,15 +27,18 @@
                         </div>
                         <div class="col-12">
                            <select th:field = "*{username}" >
-                               <option th:each ="currentUser : ${allUsers}"
+                               <option class="option"
+                                       th:each ="currentUser : ${allUsers}"
                                th:value="${currentUser.username}"
                                th:text = "${currentUser.username}"
                                >Select user</option>
                            </select>
                         </div>
                         <div class="col-12">
-                           <select th:field="*{role}" >
-                               <option th:each ="role : ${getAllRoles}"
+                           <select
+                                   th:field="*{role}" >
+                               <option class="option"
+                                       th:each ="role : ${getAllRoles}"
                                        th:text="${role.name}"
                                        th:value="${role.name}">Select role</option>
                            </select>
