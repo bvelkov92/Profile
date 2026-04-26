@@ -11,7 +11,6 @@
         <thead>
         <tr>
           <th><h4>From:</h4></th>
-          <th><h4>To:</h4></th>
           <th><h4>Subject</h4></th>
           <th><h4>Date</h4></th>
           <th><h4>Functions</h4></th>
@@ -21,7 +20,6 @@
         <tr th:each = "message : ${getLoggedUserMessages}"
             th:onclick="|window.location.href='/profile/messages/${message.id}'|">
           <td th:text="${message.sender}"></td>
-          <td th:text="${message.receiver}"></td>
           <td style="cursor: pointer;" th:text="${message.shortSubject}"></td>
           <td th:text="${message.sentAt}"></td>
           <td style="width: 1%; white-space: nowrap;">

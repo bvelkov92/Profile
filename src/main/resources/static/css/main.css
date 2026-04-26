@@ -6,14 +6,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+.main {
+    flex: 1;
+}
+
+html, body {
+    height: 100%;
+}
 
 /* BODY + BACKGROUND */
 body {
+    display:flex
     font-family: 'Open Sans', sans-serif;
     background: url("../images/background.jpg");
     background-size: cover;
     color: #fff;
     padding: 40px;
+    flex-direction:column;
 }
 
 /* TABLE WRAPPER */
@@ -187,13 +196,16 @@ li .dropdown {
 }
 
 .article {
-display: flex;
-flex-direction: column;   /* едно под друго */
-align-items: center;      /* хоризонтално център */
-justify-content: center;  /* вертикално център */
-text-align: center;       /* текст в центъра */
-min-height: 65 vh;         /* да има височина за центриране */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-height: 65vh;
+}
 
+.form-wrapper {
+    margin: auto;
 }
 
 /* текст горе */
@@ -224,14 +236,10 @@ justify-content: center;
     justify-content: center;
 }
 footer {
-    position: absolute;
     left: 0;
-    bottom: 0;
     width: 100%;
     padding: 20px;
-    text-align: left; /* Може да го смените на center */
-
-    /* Промяна на цвета */
+    text-align: left;
     color: #ffffff !important;
 }
 

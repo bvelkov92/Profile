@@ -68,7 +68,7 @@ public class MessageServiceImpl implements MessageService {
                         message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
                         message.isSeenFromReceiver(),
                         message.isSeenFromSender()
-                )).toList();
+                )).toList().reversed();
     }
 
     @Override
@@ -107,6 +107,7 @@ public class MessageServiceImpl implements MessageService {
         allAdmins.forEach(admin -> {
             MessageToAdminsDTO msg = new MessageToAdminsDTO();
             msg.setReceiver(admin.getUsername());
+            //TODO: Да оптимизирам  метода.
             msg.setSubject(sendMessageToAllAdminsDTO.getSubject());
             msg.setSeenFromSender(true);
             msg.setSeenFromReceiver(false);
@@ -123,6 +124,7 @@ public class MessageServiceImpl implements MessageService {
                 mappedMessage.setEmail(anonymousUser.getEmail());
                 mappedMessage.setSenderName(sendMessageToAllAdminsDTO.getName());
             }
+            mappedMessage.setReceiver(admin);
             messageRepository.save(mappedMessage);
             });
         }
