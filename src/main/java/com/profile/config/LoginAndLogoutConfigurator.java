@@ -1,6 +1,6 @@
 package com.profile.config;
 
-import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.LockedException;
@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class LoginAndLogoutConfigurator {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity){
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
