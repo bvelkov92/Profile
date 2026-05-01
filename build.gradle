@@ -47,3 +47,7 @@ bootJar {
 jar {
 	enabled = false
 }
+
+wrapper {
+	gradleVersion = '8.7'
+}
