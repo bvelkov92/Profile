@@ -4,9 +4,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/profile?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: 12345
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/profile?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC}
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:12345}
 
   sql:
     init:
@@ -23,6 +23,9 @@ spring:
     hidden-method:
       filter:
         enabled: true
+
+server:
+  port: ${PORT:8080}
 
 logging:
   level:
