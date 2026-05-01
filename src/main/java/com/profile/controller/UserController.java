@@ -81,36 +81,35 @@ public class UserController {
         return "work";
     }
 
-    @GetMapping("/{userId}/profile")
-    public String getProfileInfoPage(@PathVariable Long userId, Model model) {
+    @GetMapping("/profile")
+    public String getProfileInfoPage(Model model) {
         if (!model.containsAttribute("profileDTO")) {
-            model.addAttribute("profileDTO", this.userService.getFullDataUserById(userId));
+            model.addAttribute("profileDTO", this.userService.getFullDataOfLoggedUser());
             }
             return "account";
         }
 
-    @GetMapping("/{userId}/profile/edit")
-    public String getChangeProfileInfoPage(@PathVariable Long userId, Model model){
-
+    @GetMapping("/profile/edit")
+    public String getChangeProfileInfoPage(Model model){
         if (!model.containsAttribute("profileDTO")){
-            model.addAttribute("profileDTO", this.userService.getUserById(userId));
+            model.addAttribute("profileDTO", this.userService.getFullDataOfLoggedUser());
         }
         return "change-account";
     }
 
 
-    @PostMapping ("/{userId}/profile/edit")
-    public String postProfileInfoPage(@PathVariable Long userId, UserProfileDTO profileDTO,
+    @PostMapping ("/profile/edit")
+    public String postProfileInfoPage(@Valid UserProfileDTO profileDTO,
                                       BindingResult bindingResult,
                                       RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("profileDTO", profileDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.profileDTO", bindingResult);
 
-            return "redirect:/" + userId + "/profile";
+            return "redirect:/profile/edit";
         }
             this.userService.changeUserInfo(profileDTO);
-        return "redirect:/" + userId + "/profile";
+        return "redirect:/profile";
     }
 
     @GetMapping("/all")

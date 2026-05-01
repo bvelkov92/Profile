@@ -142,8 +142,9 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public MyProfileDTO getFullDataUserById(Long userId) {
-        User myProfile = this.userRepository.findById(userId).get();
+    public MyProfileDTO getFullDataOfLoggedUser() {
+        String loggedUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User myProfile = this.userRepository.findByUsername(loggedUserName).get();
        return modelMapper.map(myProfile, MyProfileDTO.class);
     }
 
@@ -154,6 +155,9 @@ public class UserServiceImpl implements  UserService {
             foundUser.setFirstName(profileDTO.getFirstName());
             foundUser.setMiddleName(profileDTO.getMiddleName());
             foundUser.setLastName(profileDTO.getLastName());
+            foundUser.setEmail(profileDTO.getEmail());
+            foundUser.setCity(profileDTO.getCity());
+            foundUser.setAge(profileDTO.getAge());
             this.userRepository.save(foundUser);
         } else {
             throw new NullPointerException("User not found!");

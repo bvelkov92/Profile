@@ -17,7 +17,7 @@
     <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
     <li><a th:href="@{/contact}">Contacts</a></li>
     <li class="dropdown" sec:authorize="isAuthenticated()">
-      <a th:href="@{/{id}/profile(id=${userId})}">
+      <a th:href="@{/profile}">
         <img class="avatar" th:src="@{/images/pic00.jpg}" alt="">
         Profile
       </a>
@@ -27,11 +27,11 @@
         </li>
 
         <li>
-          <a th:href="@{/{id}/myprojects(id=${userId})}">My Projects</a>
+          <a th:href="@{/myprojects}">My Projects</a>
         </li>
 
         <li>
-          <a th:href="@{/{id}/password(id=${userId})}">Change Password</a>
+          <a th:href="@{/password}">Change Password</a>
         </li>
 
         <li sec:authorize="hasRole('ADMIN')">

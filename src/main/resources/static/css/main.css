@@ -169,7 +169,7 @@ li .dropdown {
     }
 
     .my-profile-card{
-        display: inline-block;
+        display: flex;
         width: 100%
         align-items: center;
         gap: 20px;
@@ -177,6 +177,8 @@ li .dropdown {
         padding: 15px;
         border-radius: 10px;
         }
+
+
 
  .container-fluid{
  text-align:center
@@ -187,6 +189,40 @@ li .dropdown {
     height: 120px;
     object-fit: cover;
 }
+
+.profile-info{
+    display: flex;
+    flex-direction: column; /* едно под друго */
+    gap: 5px;
+
+}
+
+.edit-profile-button{
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+    padding: 10px;
+    text-align: center;
+    display: block;
+    display:inline-block;
+    border-radius: 15px;
+    font-size: 15px;
+    height: 40px;
+    width: 150px;
+    background-color: #00d4ff;
+    margin: 10px;
+    color:black;
+}
+
+.edit-profile-button,
+.edit-profile-button:visited,
+.edit-profile-button:active,
+.edit-profile-button:hover {
+    color:black;
+    background-color: #0099cc;   /* потъмнява */
+    transform: translateY(-1px); /* повдига */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
 .contact-wrapper {
     display: flex;
     flex-direction: column;

@@ -17,7 +17,7 @@ public interface UserService {
     User getUserById(Long id);
     MyProfileDTO getProfileInfo(Long id);
     void changeMyPassword(ChangeMyPasswordDTO changeMyPasswordDTO);
-    MyProfileDTO getFullDataUserById(Long userId);
+    MyProfileDTO getFullDataOfLoggedUser();
 
     void changeUserInfo(UserProfileDTO profileDTO);
 }
