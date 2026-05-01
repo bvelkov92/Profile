@@ -43,8 +43,8 @@
                                    id="firstName"
                                    placeholder="First name"
                                    th:errorclass="is-invalid"/>
-                            <p th:if="${#fields.hasErrors('middleName')}"
-                               th:errors="*{middleName}"
+                            <p th:if="${#fields.hasErrors('firstName')}"
+                               th:errors="*{firstName}"
                                class="invalid-feedback errors alert alert-danger">
                             </p>
                         </div>

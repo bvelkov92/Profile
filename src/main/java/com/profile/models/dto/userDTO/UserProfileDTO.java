@@ -31,8 +31,10 @@ public class UserProfileDTO {
 
     @Pattern(regexp = "^[A-Za-zА-Яа-я]+$", message = "Only letters allowed")
     private String firstName;
+
     @Pattern(regexp = "^[A-Za-zА-Яа-я]+$", message = "Only letters allowed")
     private String middleName;
+
     @Pattern(regexp = "^[A-Za-zА-Яа-я]+$", message = "Only letters allowed")
     private String lastName;
 
