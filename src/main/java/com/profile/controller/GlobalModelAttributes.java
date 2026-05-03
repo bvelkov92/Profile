@@ -40,15 +40,15 @@ public class GlobalModelAttributes {
         }
         return null;
     }
-
-    @ModelAttribute("getLoggedUserMessages")
-    public List<LoggedUserMessagesDTO> getLoggedUserMessages(Principal principal, Model model){
-        if (principal==null){
-            return List.of();
-        }
-        return List.of();
-          // return messageService.getAllMyMessages(principal.getName());
-    }
+//
+//    @ModelAttribute("getLoggedUserMessages")
+//    public List<LoggedUserMessagesDTO> getLoggedUserMessages(Principal principal, Model model){
+//        if (principal==null){
+//            return List.of();
+//        }
+//        return List.of();
+//          // return messageService.getAllMyMessages(principal.getName());
+//    }
 
     @ModelAttribute("hasUnreadMessages")
     public boolean hasUnreadMessages(Principal principal) {

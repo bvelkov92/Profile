@@ -8,7 +8,7 @@ import java.util.List;
 public interface MessageService {
 
     void sendMsg(String sender, Long receiverId,  String message, String subject);
-    List<LoggedUserMessagesDTO> getAllMyMessages(String username);
+    List<LoggedUserMessagesDTO> getAllMyMessages();
     boolean hasUnreadMessages(String username);
     void deleteMessage(Long id);
     void sendMsgToAllAdmins(SendMessageToAllAdminsDTO sendMessageToAllAdminsDTO);
