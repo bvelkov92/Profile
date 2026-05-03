@@ -88,4 +88,13 @@ public class AdminController {
             this.userService.executeAdminAction(functionsDTO);
             return "redirect:/admin/panel";
     }
+
+
+    @GetMapping("/all")
+    public String getAllUsersPage(Model model){
+        if (!model.containsAttribute("allUsers")){
+            model.addAttribute("allUsers", this.userService.getAllUsers());
+        }
+        return "all-registered-users";
+    }
 }

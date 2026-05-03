@@ -112,13 +112,6 @@ public class UserController {
         return "redirect:/profile";
     }
 
-    @GetMapping("/all")
-    public String getAllUsersPage(Model model){
-        if (!model.containsAttribute("allUsers")){
-            model.addAttribute("allUsers", this.userService.getAllUsers());
-        }
-        return "all-registered-users";
-    }
 
     @GetMapping("/profile/{id}")
     public String getSelectedProfilePage(@PathVariable Long id,Model model){
