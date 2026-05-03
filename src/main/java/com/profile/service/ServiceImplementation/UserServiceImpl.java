@@ -48,17 +48,17 @@ public class UserServiceImpl implements  UserService {
             }else {
                 newUser.setRole(RolesEnum.USER);
             }
-            newUser.setBanned(false);
-            if (file != null && !file.isEmpty()) {
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path path = Paths.get("uploads/" + fileName);
-                try {
-                    Files.createDirectories(path.getParent());
-                    Files.write(path, file.getBytes());
-                } catch (IOException e) {
-                    throw new RuntimeException("File upload failed");
-                }
-                newUser.setImage(fileName);
+            newUser.setBanned(false);if (file != null && !file.isEmpty()) {
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path path = Paths.get("uploads/" + fileName);
+            try {
+                Files.createDirectories(path.getParent());
+                Files.write(path, file.getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException("File upload failed");
+            }
+            newUser.setImage(fileName);
+
             }else {
                 newUser.setImage("default.jpg");
             }

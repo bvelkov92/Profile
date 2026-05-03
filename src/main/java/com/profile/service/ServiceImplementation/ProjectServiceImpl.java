@@ -33,10 +33,10 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public void getMyAllProjects() {
+    public List<Project> getMyAllProjects() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedUser = authentication.getName();
-        List<Project> allByProjectCreatorUsername = this.projectRepository.findAllByProjectCreator_Username(loggedUser);
+        return this.projectRepository.findAllByProjectCreator_Username(loggedUser);
     }
 
     @Override

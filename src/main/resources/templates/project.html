@@ -13,9 +13,10 @@
     <main>
       <article id="portfolio" class="wrapper style3">
         <div class="container">
-          <div class="row" th:each="current : ${projects}">
-                <a th:href="@{${current.projectGitHubLink}}" class="image featured">
-                  <img th:src="@{/images/pic01.jpg}" alt="" />
+          <div class="row"
+               th:each="current : ${projects}">
+                <a th:href="${current.projectGitHubLink}">
+                  <img class="image-profile" th:src="@{'/uploads/' + ${current.projectImage}}"alt="No Image" />
                 </a>
                 <h3 th:text="${current.projectName}"></h3>
                 <p th:text="${current.projectDescription}"></p>
