@@ -17,43 +17,46 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="message : ${getLoggedUserMessages}">
 
-          <td>
-            <a th:href="@{/profile/messages/{id}(id=${message.id})}"
-               th:text="${message.sender}"></a>
-          </td>
 
-          <td>
-            <a th:href="@{/profile/messages/{id}(id=${message.id})}"
-               th:text="${message.shortSubject}"></a>
-          </td>
+        РАБОТИ!!!!
+<!--        <tr th:each="message : ${getLoggedUserMessages}">-->
 
-          <td th:text="${message.sentAt}"></td>
+<!--          <td>-->
+<!--            <a th:href="@{/profile/messages/{id}(id=${message.id})}"-->
+<!--               th:text="${message.sender}"></a>-->
+<!--          </td>-->
 
-          <td style="width: 1%; white-space: nowrap;">
-            <form th:action="@{/profile/messages/delete/{id}(id=${message.id})}"
-                  method="post" style="display:inline;">
-              <button type="submit">
-                <img class="avatar" th:src="@{/images/recycle-bin.jpg}">
-              </button>
-            </form>
+<!--          <td>-->
+<!--            <a th:href="@{/profile/messages/{id}(id=${message.id})}"-->
+<!--               th:text="${message.shortSubject}"></a>-->
+<!--          </td>-->
 
-            <form th:action="@{/profile/messages/check/{id}(id=${message.id})}"
-                  method="post" style="display:inline;">
-              <button>
-                <img th:if="${message.isSeenByReceiver == true}"
-                     class="avatar"
-                     th:src="@{/images/open-message.png}">
+<!--          <td th:text="${message.sentAt}"></td>-->
 
-                <img th:unless="${message.isSeenByReceiver == true}"
-                     class="avatar"
-                     th:src="@{/images/closed-message.png}">
-              </button>
-            </form>
-          </td>
+<!--          <td style="width: 1%; white-space: nowrap;">-->
+<!--            <form th:action="@{/profile/messages/delete/{id}(id=${message.id})}"-->
+<!--                  method="post" style="display:inline;">-->
+<!--              <button type="submit">-->
+<!--                <img class="avatar" th:src="@{/images/recycle-bin.jpg}">-->
+<!--              </button>-->
+<!--            </form>-->
 
-        </tr>
+<!--            <form th:action="@{/profile/messages/check/{id}(id=${message.id})}"-->
+<!--                  method="post" style="display:inline;">-->
+<!--              <button>-->
+<!--                <img th:if="${message.isSeenByReceiver == true}"-->
+<!--                     class="avatar"-->
+<!--                     th:src="@{/images/open-message.png}">-->
+
+<!--                <img th:unless="${message.isSeenByReceiver == true}"-->
+<!--                     class="avatar"-->
+<!--                     th:src="@{/images/closed-message.png}">-->
+<!--              </button>-->
+<!--            </form>-->
+<!--          </td>-->
+
+<!--        </tr>-->
         </tbody>
       </table>
   </div>

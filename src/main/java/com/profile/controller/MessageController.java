@@ -24,18 +24,18 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @ModelAttribute("getLoggedUserMessages")
-    public List<LoggedUserMessagesDTO> getLoggedUserMessages(){
-        return messageService.getAllMyMessages();
-    }
-
-    @ModelAttribute("hasUnreadMessages")
-    public boolean hasUnreadMessages(Principal principal) {
-        if (principal==null){
-            return false;
-        }
-        return this.messageService.hasUnreadMessages();
-    }
+//    @ModelAttribute("getLoggedUserMessages")
+//    public List<LoggedUserMessagesDTO> getLoggedUserMessages(){
+//        return messageService.getAllMyMessages();
+//    }
+//
+//    @ModelAttribute("hasUnreadMessages")
+//    public boolean hasUnreadMessages(Principal principal) {
+//        if (principal==null){
+//            return false;
+//        }
+//        return this.messageService.hasUnreadMessages();
+//    }
 
     @GetMapping("/profile/{id}/send")
     public String getSendMessagePage(@PathVariable Long id, Model model){
@@ -64,8 +64,8 @@ public class MessageController {
 
     @GetMapping("/profile/messages")
     public String getMyMessagesPage(Model model){
-        model.addAttribute("getLoggedUserMessages", getLoggedUserMessages());
-
+       // model.addAttribute("getLoggedUserMessages", getLoggedUserMessages());
+        System.out.println("RABOTI!!!!");
         return "messages";
     }
 
