@@ -66,28 +66,33 @@ public class MessageServiceImpl implements MessageService {
         if (senderAndReceiver!=null) {
             System.out.print(senderAndReceiver.getUsername());
         }
-        return this.messageRepository
-                .findAllBySenderOrReceiver(senderAndReceiver, senderAndReceiver)
-                .stream()
-                .map(message -> new LoggedUserMessagesDTO(
-                        message.getId(),
-                        message.getSender().getUsername(),
-                        message.getReceiver().getUsername(),
-                        message.getText(),
-                        message.getSubject(),
-                        message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
-                        message.isSeenFromReceiver(),
-                        message.isSeenFromSender()
-                )).toList().reversed();
+        if (senderAndReceiver!=null) {
+            return this.messageRepository
+                    .findAllBySenderOrReceiver(senderAndReceiver, senderAndReceiver)
+                    .stream()
+                    .map(message -> new LoggedUserMessagesDTO(
+                            message.getId(),
+                            message.getSender().getUsername(),
+                            message.getReceiver().getUsername(),
+                            message.getText(),
+                            message.getSubject(),
+                            message.getSentAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
+                            message.isSeenFromReceiver(),
+                            message.isSeenFromSender()
+                    )).toList().reversed();
+        }
+        return null;
     }
 
     @Override
-    public boolean hasUnreadMessages(String username) {
-        User foundUser = this.userRepository.findByUsername(username).orElse(null);
+    public boolean hasUnreadMessages() {
+        String loggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User foundUser = this.userRepository.findByUsername(loggedUser).orElse(null);
 
         return this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
                 .stream()
-                .filter(message -> message.getReceiver().getUsername().equals(username)
+                .filter(message -> message.getReceiver().getUsername().equals(loggedUser)
                         || message.getSender().getUsername().equals("NotRegister"))
                 .anyMatch(message -> !message.isSeenFromReceiver());
     }

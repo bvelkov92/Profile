@@ -1,5 +1,6 @@
 package com.profile.controller;
 
+import com.profile.models.dto.MessageDTO.LoggedUserMessagesDTO;
 import com.profile.models.dto.MessageDTO.MessageDTO;
 import com.profile.models.dto.MessageDTO.ViewMessageDTO;
 import com.profile.models.dto.userDTO.SendMessageToAllAdminsDTO;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class MessageController {
@@ -22,6 +24,18 @@ public class MessageController {
         this.messageService = messageService;
     }
 
+    @ModelAttribute("getLoggedUserMessages")
+    public List<LoggedUserMessagesDTO> getLoggedUserMessages(){
+        return messageService.getAllMyMessages();
+    }
+
+    @ModelAttribute("hasUnreadMessages")
+    public boolean hasUnreadMessages(Principal principal) {
+        if (principal==null){
+            return false;
+        }
+        return this.messageService.hasUnreadMessages();
+    }
 
     @GetMapping("/profile/{id}/send")
     public String getSendMessagePage(@PathVariable Long id, Model model){
@@ -50,7 +64,7 @@ public class MessageController {
 
     @GetMapping("/profile/messages")
     public String getMyMessagesPage(Model model){
-        model.addAttribute("getLoggedUserMessages", this.messageService.getAllMyMessages());
+        model.addAttribute("getLoggedUserMessages", getLoggedUserMessages());
 
         return "messages";
     }

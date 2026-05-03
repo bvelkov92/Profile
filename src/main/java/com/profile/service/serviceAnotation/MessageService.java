@@ -9,7 +9,7 @@ public interface MessageService {
 
     void sendMsg(String sender, Long receiverId,  String message, String subject);
     List<LoggedUserMessagesDTO> getAllMyMessages();
-    boolean hasUnreadMessages(String username);
+    boolean hasUnreadMessages();
     void deleteMessage(Long id);
     void sendMsgToAllAdmins(SendMessageToAllAdminsDTO sendMessageToAllAdminsDTO);
     void changeMessageStatus(Long id);
