@@ -49,8 +49,7 @@ public class MessageController {
     }
 
     @GetMapping("/profile/messages")
-    public String getMyMessagesPage(Model model){
-        model.addAttribute("getLoggedUserMessages");
+    public String getMyMessagesPage(){
         return "messages";
     }
 

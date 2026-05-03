@@ -30,8 +30,8 @@ public class ProjectController {
     ////============= GET MAPPINGS   AND   POST MAPPINGS ============================
 
     @GetMapping("/myprojects")
-    public String getPortfolioPage() {
-        this.projectService.getMyAllProjects();
+    public String getPortfolioPage(Model model) {
+        model.addAttribute("projects", this.projectService.getMyAllProjects());
         return "project";
     }
 

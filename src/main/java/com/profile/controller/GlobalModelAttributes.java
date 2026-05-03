@@ -46,7 +46,8 @@ public class GlobalModelAttributes {
         if (principal==null){
             return List.of();
         }
-           return messageService.getAllMyMessages(principal.getName());
+        return List.of();
+          // return messageService.getAllMyMessages(principal.getName());
     }
 
     @ModelAttribute("hasUnreadMessages")
