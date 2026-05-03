@@ -145,8 +145,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("changePassword", changeMyPasswordDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changePassword", bindingResult);
-
-            return "redirect:/" + id + "/password";
+            return "redirect:/password";
         }
 
         try {
@@ -155,7 +154,7 @@ public class UserController {
         } catch (RuntimeException message) {
             redirectAttributes.addFlashAttribute("changePassword", changeMyPasswordDTO);
             redirectAttributes.addFlashAttribute("invalidPassword", true);
-            return "redirect:/" + id + "/password";
+            return "redirect:/password";
         }
     }
 
