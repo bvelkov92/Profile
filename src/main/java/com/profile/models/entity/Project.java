@@ -3,10 +3,12 @@ package com.profile.models.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "projects")
 @Getter
+@Setter
 public class Project extends BaseEntity {
 
     @NotBlank

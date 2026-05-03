@@ -19,7 +19,8 @@ public class AddNewProjectDTO {
 
     private String projectDescription;
 
-    private String projectImage;
-
     private String projectGitHubLink;
+
+    private String image;
+
 }

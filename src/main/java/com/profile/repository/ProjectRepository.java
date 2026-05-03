@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    List<Project> findAllByProjectCreator_Id(Long id);
+    List<Project> findAllByProjectCreator_Username(String username);
+
 }

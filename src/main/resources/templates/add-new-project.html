@@ -14,7 +14,8 @@
             <div class="col-12">
                 <form th:method="post"
                       th:object="${addNewProjectDTO}"
-                      th:action="@{/{loggedUserId}/myprojects/new(loggedUserId = ${userId})}">
+                      th:action="@{/myprojects/new}"
+                      enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-6 col-12-small">
                             <input type="text" name="projectName" id="projectName" placeholder="Project Name" />
@@ -30,43 +31,20 @@
                                   <li> <input type="file" id="projectImage" name="projectImage"></li>
                             </ul>
                         </div>
-
-                        <div class="col-12">
-                            <ul class="actions">
-                                <li><input type="submit" value="Send Message" /></li>
-                                <li><input type="reset" value="Clear Form" class="alt" /></li>
+                            <ul>
+                                <li><input  type="submit" value="UPLOAD PROJECT" /></li>
                             </ul>
-                        </div>
                     </div>
                 </form>
-            </div>
-            <div class="col-12">
-                <hr />
-                <h3>Find me on ...</h3>
-                <ul class="social">
-                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-                    <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
-                    <li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
-                    <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-                </ul>
-                <hr />
             </div>
         </div>
         <footer>
             <div th:replace="~{fragments/social}"></div>
+            <ul id="copyright">
+                <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
+            </ul>
         </footer>
     </div>
 </article>
-
-<!-- Scripts -->
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/jquery.scrolly.min.js}"></script>
-<script th:src="@{/js/browser.min.js}"></script>
-<script th:src="@{/js/breakpoints.min.js}"></script>
-<script th:src="@{/js/util.js}"></script>
-<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

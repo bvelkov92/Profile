@@ -56,7 +56,7 @@ public class UserController {
     @PostMapping("/register")
     public String postRegisterPage(@Valid UserRegisterDTO userRegisterDTO,
                                    BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes, @RequestParam MultipartFile projectImage) {
+                                   RedirectAttributes redirectAttributes, @RequestParam MultipartFile userImage) {
 
         if (this.userService.isUsernameValid(userRegisterDTO)) {
             bindingResult.rejectValue("username", "usedUsername", "Username exist or is less than 5 symbols!");
@@ -67,7 +67,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
             return "redirect:/register";
         }
-        this.userService.userRegister(userRegisterDTO,projectImage);
+        this.userService.userRegister(userRegisterDTO,userImage);
 
         return "index";
 
@@ -128,7 +128,7 @@ public class UserController {
         return "other-account-view";
     }
 
-    @GetMapping("/{id}/password")
+    @GetMapping("/password")
     public String getChangeMyPasswordPage(Model model){
         if (!model.containsAttribute("changePassword")){
             model.addAttribute("changePassword", new ChangeMyPasswordDTO());
@@ -137,7 +137,7 @@ public class UserController {
         return "change-my-password.html";
     }
 
-    @PostMapping("/{id}/password")
+    @PostMapping("/password")
     public String postChangeMyPasswordPage(@PathVariable Long id,
                                            @Valid ChangeMyPasswordDTO changeMyPasswordDTO,
                                            BindingResult bindingResult,

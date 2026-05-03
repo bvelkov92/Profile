@@ -4,30 +4,35 @@
 </head>
 <body>
 <div th:replace="~{fragments/nav}"></div>
-<article id="portfolio" class="wrapper style3">
-  <div class="container">
     <header>
+      <div class="container">
       <h2>Projects</h2>
       <p>Here you have to find my projects</p>
-    </header>
-    <div class="row"
-         th:each ="current : ${projects}">
-      <div class="col-4 col-6-medium col-12-small">
-        <article class="box style2">
-          <a th:href="${current.projectGitHubLink}" class="image featured">
-            <img th:src="@{/images/pic01.jpg}" alt="" /></a>
-          <h3 th:text="current.projectName">
-            <a th:href="${current.projectGitHubLink}"></a></h3>
-          <p th:text="${current.projectDescription}"></p>
-        </article>
       </div>
-    </div>
+    </header>
+    <main>
+      <article id="portfolio" class="wrapper style3">
+        <div class="container">
+          <div class="row" th:each="current : ${projects}">
+                <a th:href="@{${current.projectGitHubLink}}" class="image featured">
+                  <img th:src="@{/images/pic01.jpg}" alt="" />
+                </a>
+                <h3 th:text="${current.projectName}"></h3>
+                <p th:text="${current.projectDescription}"></p>
+            </div>
+          <div class="container">
+            <p>You have new project?</p>
+            <a th:href="@{/myprojects/new}" class="edit-profile-button">ADD PROJECT</a>
+          </div>
+          </div>
+      </article>
+    </main>
     <footer>
-      <p>You have new project?</p>
-      <a th:href="@{/{userId}/myprojects/new(userId=${userId})}" class="button large scrolly">Add it here!</a>
+      <div th:replace="~{fragments/social}"></div>
+      <ul id="copyright">
+        <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b></li>
+      </ul>
     </footer>
-  </div>
-</article>
 
 <!-- Scripts -->
 <script th:src="@{/js/jquery.min.js}"></script>

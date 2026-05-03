@@ -16,7 +16,7 @@ html, body {
 
 /* BODY + BACKGROUND */
 body {
-    display:flex
+    display:flex;
     font-family: 'Open Sans', sans-serif;
     background: url("../images/background.jpg");
     background-size: cover;
@@ -115,8 +115,6 @@ body {
 }
 
 #message{
-    margin: 0px;
-    padding: 0px;
     background-color: #5f575752;
     width: 400px;
     height: 100px;
@@ -170,7 +168,7 @@ li .dropdown {
 
     .my-profile-card{
         display: flex;
-        width: 100%
+        width: 100%;
         align-items: center;
         gap: 20px;
         background: rgba(0, 0, 0, 0.6);
@@ -203,7 +201,6 @@ li .dropdown {
     padding: 10px;
     text-align: center;
     display: block;
-    display:inline-block;
     border-radius: 15px;
     font-size: 15px;
     height: 40px;
@@ -281,7 +278,7 @@ footer {
 
 
 .icon:before {
-    font-family: "Font Awesome 5 Brands";
+    font-family: "Font Awesome 5 Brands", serif;
     font-weight: 400;
 }
 
@@ -292,7 +289,6 @@ list-style: none;
 /* 1. Контейнерът (Черното квадратче) */
 form {
     background-color: rgba(0, 0, 0, 0.85); /* Тъмно и леко прозрачно */
-    padding: 0px;
     border-radius: 10px;
     max-width: 400px;
     margin: -8px auto; /* Центрира формата хоризонтално */
@@ -405,7 +401,7 @@ select .option{
      width: 42%;
      padding: 12px 15px;
      color: #fff;
-     margin: 0px 0px -10px 2px;
+     margin: 0 0 -10px 2px;
      background: #160c0c;   /* син цвят */
      border: none;
      border-radius: 6px;

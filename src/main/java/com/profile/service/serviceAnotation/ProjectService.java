@@ -1,12 +1,12 @@
 package com.profile.service.serviceAnotation;
 
 
-import com.profile.models.entity.Project;
-
-import java.util.List;
-
+import com.profile.models.dto.projectDTO.AddNewProjectDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProjectService {
 
-    List<Project> getMyAllProjects (Long id);
+
+    void getMyAllProjects();
+    void addProject(AddNewProjectDTO addNewProjectDTO, MultipartFile projectImage);
 }
