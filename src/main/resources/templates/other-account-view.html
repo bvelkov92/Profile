@@ -20,23 +20,14 @@
                     <div th:if ="*{lastName}!=null"  class="col-12"><h4>Last name:  </h4><span th:text="*{lastName}"></span></div>
                     </div>
             </div>
-            <div th:replace="~{fragments/social}"></div>
         </div>
     </div>
-    <footer>
-        <div th:replace="~{fragments/social}"></div>
-        <ul id="copyright">
-            <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b>/button></li>
-        </ul>
-    </footer>
 </article>
-
-<!-- Scripts -->
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/jquery.scrolly.min.js}"></script>
-<script th:src="@{/js/browser.min.js}"></script>
-<script th:src="@{/js/breakpoints.min.js}"></script>
-<script th:src="@{/js/util.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+<footer>
+    <div th:replace="~{fragments/social}"></div>
+    <ul id="copyright">
+        <li>&copy; 2026 All rights reserved.</li><li>Design by <b>Boris Velkov</b>/button></li>
+    </ul>
+</footer>
 </body>
 </html>
