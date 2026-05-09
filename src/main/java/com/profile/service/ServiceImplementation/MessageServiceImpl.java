@@ -87,9 +87,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public boolean hasUnreadMessages() {
         String loggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-
         User foundUser = this.userRepository.findByUsername(loggedUser).orElse(null);
-
         return this.messageRepository.findAllBySenderOrReceiver(foundUser, foundUser)
                 .stream()
                 .filter(message -> message.getReceiver().getUsername().equals(loggedUser)

@@ -1,17 +1,17 @@
 package com.profile.controller;
 
 import com.profile.models.dto.userDTO.*;
+import com.profile.models.enums.RolesEnum;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -22,6 +22,12 @@ public class UserController {
         this.userService = userService;
     }
 
+
+
+    @ModelAttribute("getAdminFunction")
+    public List<String> adminFunctions() {
+        return List.of("Change role", "Delete user", "Ban user", "Unban user");
+    }
 
     @GetMapping("/search")
     public String getAllRegisteredUsersPage(Model model){
@@ -56,10 +62,12 @@ public class UserController {
     @PostMapping("/register")
     public String postRegisterPage(@Valid UserRegisterDTO userRegisterDTO,
                                    BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes, @RequestParam MultipartFile userImage) {
+                                   RedirectAttributes redirectAttributes,
+                                   @RequestParam MultipartFile userImage) {
 
         if (this.userService.isUsernameValid(userRegisterDTO)) {
             bindingResult.rejectValue("username", "usedUsername", "Username exist or is less than 5 symbols!");
+            return "redirect:/register";
         }
 
         if (bindingResult.hasErrors()) {
@@ -69,7 +77,7 @@ public class UserController {
         }
         this.userService.userRegister(userRegisterDTO,userImage);
 
-        return "index";
+        return "redirect:/";
 
     }
 
@@ -131,8 +139,7 @@ public class UserController {
     }
 
     @PostMapping("/password")
-    public String postChangeMyPasswordPage(@PathVariable Long id,
-                                           @Valid ChangeMyPasswordDTO changeMyPasswordDTO,
+    public String postChangeMyPasswordPage(@Valid ChangeMyPasswordDTO changeMyPasswordDTO,
                                            BindingResult bindingResult,
                                            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {

@@ -19,23 +19,19 @@ public class MessageController {
 
     private final MessageService messageService;
 
-
     public MessageController(MessageService messageService) {
         this.messageService = messageService;
     }
 
-//    @ModelAttribute("getLoggedUserMessages")
-//    public List<LoggedUserMessagesDTO> getLoggedUserMessages(){
-//        return messageService.getAllMyMessages();
-//    }
-//
-//    @ModelAttribute("hasUnreadMessages")
-//    public boolean hasUnreadMessages(Principal principal) {
-//        if (principal==null){
-//            return false;
-//        }
-//        return this.messageService.hasUnreadMessages();
-//    }
+    @ModelAttribute("getLoggedUserMessages")
+    public List<LoggedUserMessagesDTO> getLoggedUserMessages(){
+        return messageService.getAllMyMessages();
+    }
+
+    @ModelAttribute("hasUnreadMessages")
+    public boolean hasUnreadMessages() {
+        return this.messageService.hasUnreadMessages();
+    }
 
     @GetMapping("/profile/{id}/send")
     public String getSendMessagePage(@PathVariable Long id, Model model){
@@ -56,6 +52,7 @@ public class MessageController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.messageDTO", bindingResult);
             return "redirect:/profile/" +id +"/send";
         }
+
         String sender = principal.getName();
         this.messageService.sendMsg(sender, id, messageDTO.getText(), messageDTO.getSubject());
 
@@ -64,8 +61,7 @@ public class MessageController {
 
     @GetMapping("/profile/messages")
     public String getMyMessagesPage(Model model){
-       // model.addAttribute("getLoggedUserMessages", getLoggedUserMessages());
-        System.out.println("RABOTI!!!!");
+        model.addAttribute("getLoggedUserMessages", getLoggedUserMessages());
         return "messages";
     }
 

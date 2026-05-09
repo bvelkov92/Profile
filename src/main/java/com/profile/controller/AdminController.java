@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 
 
 @Controller
@@ -20,13 +22,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AdminController {
 
     private final UserService userService;
-
-
     public AdminController(UserService userService) {
         this.userService = userService;
     }
 
+    @ModelAttribute("getAllRoles")
+    public RolesEnum[] rolesEnums(){
+        return RolesEnum.values();
+    }
 
+    @ModelAttribute("getAdminFunction")
+    public List<String> adminFunctions() {
+        return List.of("Change role", "Delete user", "Ban user", "Unban user");
+    }
 
     @GetMapping("/panel")
     public String getAdminPanelPage(Model model){
