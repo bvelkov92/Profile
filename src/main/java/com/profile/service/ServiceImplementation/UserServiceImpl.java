@@ -1,6 +1,7 @@
 package com.profile.service.ServiceImplementation;
 
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
+import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
 import com.profile.models.dto.userDTO.*;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
@@ -102,9 +103,15 @@ public class UserServiceImpl implements  UserService {
         }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<GetRegisteredUsersDTO> getAllUsers() {
         return this.userRepository.findAll().stream()
                 .filter(user -> !user.getUsername().equals("NotRegister"))
+                .map(current-> new GetRegisteredUsersDTO(
+                        current.getId(),
+                        current.getUsername(),
+                        current.getEmail(),
+                        current.getRole().name()
+                ))
                 .toList();
     }
 

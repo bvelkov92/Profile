@@ -1,5 +1,6 @@
 package com.profile.service.serviceAnotation;
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
+import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
 import com.profile.models.dto.userDTO.*;
 import com.profile.models.entity.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +13,7 @@ public interface UserService {
     boolean isUsernameValid(UserRegisterDTO userRegisterDTO);
     User getUserByUsername(String username);
     void executeAdminAction(FunctionsDTO functionsDTO);
-    List<User> getAllUsers();
+    List<GetRegisteredUsersDTO> getAllUsers();
     List<AllUsersDTO> viewAllRegisteredUsers();
     User getUserById(Long id);
     MyProfileDTO getProfileInfo(Long id);
