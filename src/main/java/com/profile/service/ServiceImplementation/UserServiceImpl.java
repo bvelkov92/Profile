@@ -121,7 +121,9 @@ public class UserServiceImpl implements  UserService {
                 user.getUsername(),
                 user.getImage(),
                 user.getAge(),
-                user.getCity()))
+                user.getCity(),
+                user.getRole().name())
+                )
                 .filter(user -> !user.getUsername().equals("NotRegister"))
                 .toList();
     }
