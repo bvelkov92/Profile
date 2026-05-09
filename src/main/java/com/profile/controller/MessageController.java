@@ -60,7 +60,7 @@ public class MessageController {
     }
 
     @GetMapping("/profile/messages")
-    public String getMyMessagesPage(Model model){
+    public String getMyMessagesPage(){
         return "messages";
     }
 
