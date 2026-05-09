@@ -56,16 +56,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<LoggedUserMessagesDTO> getAllMyMessages() {
         Authentication username= SecurityContextHolder.getContext().getAuthentication();
-
         User senderAndReceiver = this.userRepository.findByUsername(username.getName()).orElse(null);
 
-        if (senderAndReceiver==null) {
-            System.out.print("is null");
-        }
-
-        if (senderAndReceiver!=null) {
-            System.out.print(senderAndReceiver.getUsername());
-        }
         if (senderAndReceiver!=null) {
             return this.messageRepository
                     .findAllBySenderOrReceiver(senderAndReceiver, senderAndReceiver)

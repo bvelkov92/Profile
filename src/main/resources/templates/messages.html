@@ -35,7 +35,7 @@
             <form th:action="@{/profile/messages/delete/{id}(id=${message.id})}"
                   method="post" style="display:inline;">
               <button type="submit">
-                <img class="avatar" th:src="@{/images/recycle-bin.jpg}">
+                <img class="avatar" th:src="@{/images/recycle-bin.jpg}" alt="No image">
               </button>
             </form>
 
@@ -44,11 +44,11 @@
               <button>
                 <img th:if="${message.isSeenByReceiver == true}"
                      class="avatar"
-                     th:src="@{/images/open-message.png}">
+                     th:src="@{/images/open-message.png}" alt="No image">
 
                 <img th:unless="${message.isSeenByReceiver == true}"
                      class="avatar"
-                     th:src="@{/images/closed-message.png}">
+                     th:src="@{/images/closed-message.png}" alt="No image">
               </button>
             </form>
           </td>
