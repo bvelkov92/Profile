@@ -35,7 +35,7 @@
         </li>
 
         <li sec:authorize="hasRole('ADMIN')">
-          <a th:href="@{admin/all}">Registered users</a>
+          <a th:href="@{/admin/all}">Registered users</a>
         </li>
         <li sec:authorize="isAuthenticated()">
           <form
