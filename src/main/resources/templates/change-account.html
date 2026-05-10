@@ -73,6 +73,30 @@
                                   class="invalid-feedback errors alert alert-danger">
                         </p>
                         </div>
+                        <div class="col-12">
+                            <input type="number"
+                                   name="age"
+                                   th:field="*{age}"
+                                   id="age"
+                                   placeholder="Age"
+                                   th:errorclass="is-invalid"/>
+                            <p th:if="${#fields.hasErrors('age')}"
+                               th:errors="*{age}"
+                               class="invalid-feedback errors alert alert-danger">
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <input type="text"
+                                   name="city"
+                                   th:field="*{city}"
+                                   id="city"
+                                   placeholder="City"
+                                   th:errorclass="is-invalid"/>
+                            <p th:if="${#fields.hasErrors('city')}"
+                               th:errors="*{city}"
+                               class="invalid-feedback errors alert alert-danger">
+                            </p>
+                        </div>
 
                         <div class="col-12">
                             <ul class="actions">
