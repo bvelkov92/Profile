@@ -4,7 +4,6 @@ import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
 import com.profile.models.dto.userDTO.*;
 import com.profile.models.entity.User;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 public interface UserService {

@@ -1,7 +1,6 @@
 package com.profile.controller;
 
 import com.profile.models.dto.userDTO.*;
-import com.profile.models.enums.RolesEnum;
 import com.profile.service.serviceAnotation.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
