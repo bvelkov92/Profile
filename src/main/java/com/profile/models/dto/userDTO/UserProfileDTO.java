@@ -35,7 +35,7 @@ public class UserProfileDTO {
     @Pattern(regexp = "^[A-Za-zА-Яа-я]+$", message = "Only letters allowed")
     private String lastName;
 
-    @Size(min = 3, message = "Incorrected city")
+    @Size(min = 3, message = "Incorrect city")
     private String city;
 
     private Integer age;
