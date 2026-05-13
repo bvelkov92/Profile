@@ -1,4 +1,4 @@
-package com.profile.service.ServiceImplementation;
+package com.profile.service.serviceImpl;
 
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
