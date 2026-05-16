@@ -68,7 +68,7 @@ public class UserServiceImpl implements  UserService {
 
     public boolean isUsernameValid(UserRegisterDTO userRegisterDTO) {
             User foundUser = this.userRepository.findByUsername(userRegisterDTO.getUsername().trim().toLowerCase()).orElse(null);
-            return foundUser != null;
+            return foundUser == null;
         }
 
     @Override

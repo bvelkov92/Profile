@@ -64,7 +64,7 @@ public class UserController {
                                    RedirectAttributes redirectAttributes,
                                    @RequestParam MultipartFile userImage) {
 
-        if (this.userService.isUsernameValid(userRegisterDTO)) {
+        if (!this.userService.isUsernameValid(userRegisterDTO)) {
             bindingResult.rejectValue("username", "usedUsername", "Username exist or is less than 5 symbols!");
             return "redirect:/register";
         }
