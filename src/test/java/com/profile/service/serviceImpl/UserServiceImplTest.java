@@ -23,6 +23,7 @@ public class UserServiceImplTest {
     @Mock
     private UserServiceImpl mockUserService;
 
+    private User registeredUser;
 
     @Mock
     private UserRepository mockUserRepository;
@@ -40,8 +41,10 @@ public class UserServiceImplTest {
                 mockBlackListService,
                 mockModelMapper);
 
-    }
+        registeredUser = new User();
+        registeredUser.setUsername("registered");
 
+    }
 
     @Test
     void userRegister() {
@@ -51,20 +54,17 @@ public class UserServiceImplTest {
     @Test
     void isUsernameValid() {
 
-        UserRegisterDTO registeredUser = new UserRegisterDTO();
-        registeredUser.setUsername("registered");
+        UserRegisterDTO registeredUserDto = new UserRegisterDTO();
+        registeredUserDto.setUsername("registered");
 
-        UserRegisterDTO notRegisteredUser = new UserRegisterDTO();
-        notRegisteredUser.setUsername("unregistered");
+        UserRegisterDTO notRegisteredUserDto = new UserRegisterDTO();
+        notRegisteredUserDto.setUsername("unregistered");
 
-        User foundUser = new User();
-        foundUser.setUsername("registered");
+        when(mockUserRepository.findByUsername(registeredUserDto.getUsername())).thenReturn(Optional.of(registeredUser));
+        when(mockUserRepository.findByUsername(notRegisteredUserDto.getUsername())).thenReturn(Optional.empty());
 
-        when(mockUserRepository.findByUsername(registeredUser.getUsername())).thenReturn(Optional.of(foundUser));
-        when(mockUserRepository.findByUsername(notRegisteredUser.getUsername())).thenReturn(Optional.empty());
-
-        boolean isUsernameAvailable = mockUserService.isUsernameValid(notRegisteredUser);
-        boolean isUsernameTaken = mockUserService.isUsernameValid(registeredUser);
+        boolean isUsernameAvailable = mockUserService.isUsernameValid(notRegisteredUserDto);
+        boolean isUsernameTaken = mockUserService.isUsernameValid(registeredUserDto);
 
         Assertions.assertTrue(isUsernameAvailable);
         Assertions.assertFalse(isUsernameTaken);
@@ -72,6 +72,16 @@ public class UserServiceImplTest {
 
     @Test
     void getUserByUsername() {
+
+        User findUser = new User();
+        findUser.setUsername("registered");
+        when(mockUserRepository.findByUsername(findUser.getUsername())).thenReturn(Optional.of(registeredUser));
+
+        User foundUser = mockUserService.getUserByUsername(findUser.getUsername());
+        User notFoundUser = mockUserService.getUserByUsername("notregistered");
+
+        Assertions.assertEquals(registeredUser, foundUser);
+        Assertions.assertNull(notFoundUser);
     }
 
     @Test
