@@ -1,7 +1,10 @@
 package com.profile.service.serviceImpl;
 
+import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
+import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
+import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.BlackListService;
 import org.junit.jupiter.api.Assertions;
@@ -13,8 +16,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,8 +34,9 @@ public class UserServiceImplTest {
 
     @Mock
     private UserRepository mockUserRepository;
+
     @Mock
-    private  PasswordEncoder mockPasswordEncoder;
+    private PasswordEncoder mockPasswordEncoder;
     @Mock
     private BlackListService mockBlackListService;
     @Mock
@@ -43,6 +51,8 @@ public class UserServiceImplTest {
 
         registeredUser = new User();
         registeredUser.setUsername("registered");
+        registeredUser.setBanned(false);
+        registeredUser.setRole(RolesEnum.USER);
 
     }
 
@@ -66,8 +76,8 @@ public class UserServiceImplTest {
         boolean isUsernameAvailable = mockUserService.isUsernameValid(notRegisteredUserDto);
         boolean isUsernameTaken = mockUserService.isUsernameValid(registeredUserDto);
 
-        Assertions.assertTrue(isUsernameAvailable);
-        Assertions.assertFalse(isUsernameTaken);
+        assertTrue(isUsernameAvailable);
+        assertFalse(isUsernameTaken);
     }
 
     @Test
@@ -84,12 +94,97 @@ public class UserServiceImplTest {
         Assertions.assertNull(notFoundUser);
     }
 
+
     @Test
-    void executeAdminAction() {
+    void executeAdminActionInvalidUser() {
+        FunctionsDTO functionsDTO = new FunctionsDTO();
+        functionsDTO.setFunctionName("Unban user");
+        functionsDTO.setUsername("invalidUser");
+        boolean isBanned = false;
+
+        when(mockUserRepository.findByUsername(functionsDTO.getUsername()))
+                .thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> mockUserService.executeAdminAction(functionsDTO)
+        );
+
+        assertEquals("User not found!", exception.getMessage());
+    }
+
+
+    @Test
+    void executeAdminActionChangeRoleTest() {
+
+        FunctionsDTO functionsDTO = new FunctionsDTO();
+        functionsDTO.setFunctionName("Change role");
+        functionsDTO.setRole(RolesEnum.ADMIN);
+        functionsDTO.setUsername(registeredUser.getUsername());
+
+        when(mockUserRepository.findByUsername(functionsDTO.getUsername())).thenReturn(Optional.of(registeredUser));
+
+        mockUserService.executeAdminAction(functionsDTO);
+
+        Assertions.assertEquals(RolesEnum.ADMIN, registeredUser.getRole());
+        verify(mockUserRepository).save(registeredUser);
+    }
+
+    @Test
+    void executeAdminActionBanUser() {
+        FunctionsDTO functionsDTO = new FunctionsDTO();
+        functionsDTO.setFunctionName("Ban user");
+        functionsDTO.setUsername(registeredUser.getUsername());
+        boolean isBanned = true;
+
+        when(mockUserRepository.findByUsername(functionsDTO.getUsername())).thenReturn(Optional.of(registeredUser));
+
+        mockUserService.executeAdminAction(functionsDTO);
+
+        assertTrue(registeredUser.isBanned());
+        verify(mockBlackListService).addUserToBlackList(registeredUser);
+        verify(mockUserRepository).save(registeredUser);
+}
+
+    @Test
+    void executeAdminActionUnbanUser() {
+        FunctionsDTO functionsDTO = new FunctionsDTO();
+        functionsDTO.setFunctionName("Unban user");
+        functionsDTO.setUsername(registeredUser.getUsername());
+        boolean isBanned = false;
+
+        when(mockUserRepository.findByUsername(functionsDTO.getUsername())).thenReturn(Optional.of(registeredUser));
+        registeredUser.setBanned(true);
+
+        mockUserService.executeAdminAction(functionsDTO);
+
+        assertFalse(registeredUser.isBanned());
+
+        verify(mockBlackListService).deleteUserFromBlackList(registeredUser);
+        verify(mockUserRepository).save(registeredUser);
+    }
+
+    @Test
+    void executeAdminActionDeleteUser() {
+
+        FunctionsDTO functionsDTO = new FunctionsDTO();
+        functionsDTO.setFunctionName("Delete user");
+        functionsDTO.setUsername(registeredUser.getUsername());
+
+        when(mockUserRepository.findByUsername(functionsDTO.getUsername())).thenReturn(Optional.of(registeredUser));
+
+        mockUserService.executeAdminAction(functionsDTO);
+
+        verify(mockUserRepository).delete(registeredUser);
     }
 
     @Test
     void getAllUsers() {
+
+        List<GetRegisteredUsersDTO> allRegisteredUsers = new ArrayList<>();
+        allRegisteredUsers.add("1", "Goshko",)
+
+        when(mockUserRepository)
     }
 
     @Test

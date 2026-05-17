@@ -83,22 +83,21 @@ public class UserServiceImpl implements  UserService {
 
 
         switch (functionsDTO.getFunctionName()) {
-                case "Change role" -> foundUser.setRole(functionsDTO.getRole());
-                case "Ban user" -> {
-                    foundUser.setBanned(true);
-                    this.blackListService.addUserToBlackList(foundUser);
+            case "Change role" -> foundUser.setRole(functionsDTO.getRole());
+            case "Ban user" -> {
+                foundUser.setBanned(true);
+                this.blackListService.addUserToBlackList(foundUser);
 
-                }
-                case "Unban user" -> {
-                    foundUser.setBanned(false);
-                    this.blackListService.deleteUserFromBlackList(foundUser);
-                }
-                case "Delete user" -> {
-                    this.userRepository.delete(foundUser);
-                    return;
-                }
-                default -> throw new NullPointerException("User not found!");
             }
+            case "Unban user" -> {
+                foundUser.setBanned(false);
+                this.blackListService.deleteUserFromBlackList(foundUser);
+            }
+            case "Delete user" -> {
+                this.userRepository.delete(foundUser);
+                return;
+            }
+        }
             this.userRepository.save(foundUser);
         }
 
