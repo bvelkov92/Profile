@@ -2,6 +2,8 @@ package com.profile.service.serviceImpl;
 
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
 import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
+import com.profile.models.dto.userDTO.AllUsersDTO;
+import com.profile.models.dto.userDTO.ChangeMyPasswordDTO;
 import com.profile.models.dto.userDTO.MyProfileDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
@@ -15,6 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -22,8 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 //@SpringBootTest
@@ -213,6 +217,27 @@ public class UserServiceImplTest {
 
     @Test
     void viewAllRegisteredUsers() {
+        User user1 = new User();
+        user1.setUsername("Peshko");
+        user1.setRole(RolesEnum.USER);
+
+        User user2 = new User();
+        user2.setUsername("Goshko");
+        user2.setRole(RolesEnum.USER);
+
+        User notReg = new User();
+        notReg.setUsername("NotRegister");
+        notReg.setRole(RolesEnum.USER);
+
+        when(mockUserRepository.findAll()).thenReturn(List.of(user1,user2,registeredUser,notReg));
+
+        List<AllUsersDTO> allUsersDTOS = mockUserService.viewAllRegisteredUsers();
+
+        Assertions.assertEquals(3, allUsersDTOS.size());
+        Assertions.assertEquals("registered", allUsersDTOS.getLast().getUsername());
+        Assertions.assertEquals("Peshko", allUsersDTOS.getFirst().getUsername());
+
+
     }
 
     @Test
@@ -250,10 +275,63 @@ public class UserServiceImplTest {
 
     @Test
     void changeMyPassword() {
+
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+
+        SecurityContextHolder.setContext(securityContext);
+
+        when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+
+        when(authentication.getName())
+                .thenReturn("registered");
+
+        when(mockUserRepository.findByUsername("registered")).thenReturn(Optional.of(registeredUser));
+
+        ChangeMyPasswordDTO passwordsDTO = new ChangeMyPasswordDTO();
+        passwordsDTO.setNewPassword("123456");
+        String password = registeredUser.getPassword();
+
+        mockUserService.changeMyPassword(passwordsDTO);
+
+        boolean wasChangedPasswords = !mockPasswordEncoder.matches(password, registeredUser.getPassword());
+
+        Assertions.assertEquals(mockPasswordEncoder.encode(passwordsDTO.getNewPassword()), registeredUser.getPassword());
+        Assertions.assertTrue(wasChangedPasswords);
+
     }
 
     @Test
     void getFullDataOfLoggedUser() {
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+
+        MyProfileDTO allInfoOfLoggedUser = new MyProfileDTO();
+        allInfoOfLoggedUser.setUsername("registered");
+
+        when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+
+        when(authentication.getName())
+                .thenReturn("registered");
+
+        when(mockUserRepository.findByUsername("registered")).thenReturn(Optional.of(registeredUser));
+
+
+        when(mockModelMapper.map(registeredUser, MyProfileDTO.class))
+                .thenReturn(allInfoOfLoggedUser);
+
+        MyProfileDTO result =
+                mockUserService.getFullDataOfLoggedUser();
+
+        Assertions.assertEquals(
+                "registered",
+                result.getUsername()
+        );
+
+
     }
 
     @Test

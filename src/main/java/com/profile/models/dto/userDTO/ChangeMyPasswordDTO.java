@@ -3,6 +3,7 @@ package com.profile.models.dto.userDTO;
 import com.profile.utils.validator.anotation.CheckCurrentPasswordValidation;
 import com.profile.utils.validator.anotation.CheckNewAndConfirmPasswordsValidation;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @CheckNewAndConfirmPasswordsValidation
 public class ChangeMyPasswordDTO {
 
