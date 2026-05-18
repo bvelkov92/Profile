@@ -2,10 +2,7 @@ package com.profile.service.serviceImpl;
 
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
 import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
-import com.profile.models.dto.userDTO.AllUsersDTO;
-import com.profile.models.dto.userDTO.ChangeMyPasswordDTO;
-import com.profile.models.dto.userDTO.MyProfileDTO;
-import com.profile.models.dto.userDTO.UserRegisterDTO;
+import com.profile.models.dto.userDTO.*;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
@@ -22,7 +19,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -336,5 +332,32 @@ public class UserServiceImplTest {
 
     @Test
     void changeUserInfo() {
+        UserProfileDTO newDataDto = new UserProfileDTO();
+        newDataDto.setUsername(registeredUser.getUsername());
+
+        UserProfileDTO invalidUser = new UserProfileDTO();
+        invalidUser.setUsername("Mitko");
+
+        newDataDto.setFirstName("Admin");
+        newDataDto.setLastName( "Adminski");
+        newDataDto.setAge(20);
+
+        String lastNameBeforeMethod = registeredUser.getLastName();
+        Integer ageBeforeMethod = registeredUser.getAge();
+
+        when(mockUserRepository.findByUsername(newDataDto.getUsername())).thenReturn(Optional.of(registeredUser));
+
+        mockUserService.changeUserInfo(newDataDto);
+
+        Assertions.assertEquals("Admin", registeredUser.getFirstName());
+        Assertions.assertNotEquals(lastNameBeforeMethod, registeredUser.getLastName());
+        Assertions.assertNotEquals(ageBeforeMethod, registeredUser.getAge());
+        Assertions.assertEquals(newDataDto.getUsername(), registeredUser.getUsername());
+
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                ()-> mockUserService.changeUserInfo(invalidUser));
+
+        Assertions.assertEquals("User not found!", exception.getMessage());
+
     }
 }
