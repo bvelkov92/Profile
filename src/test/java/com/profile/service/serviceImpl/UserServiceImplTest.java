@@ -180,11 +180,34 @@ public class UserServiceImplTest {
 
     @Test
     void getAllUsers() {
+        User user1 = new User();
+        user1.setUsername("gosko");
+        user1.setRole(RolesEnum.USER);
 
-        List<GetRegisteredUsersDTO> allRegisteredUsers = new ArrayList<>();
-        allRegisteredUsers.add("1", "Goshko",)
+        User user2 = new User();
+        user2.setUsername("gosko1");
+        user2.setRole(RolesEnum.USER);
 
-        when(mockUserRepository)
+        User user3 = new User();
+        user3.setUsername("gosko2");
+        user3.setRole(RolesEnum.ADMIN);
+
+        User user4 = new User();
+        user4.setUsername("gosko3");
+        user4.setRole(RolesEnum.MODERATOR);
+
+        User notReg = new User();
+        notReg.setUsername("NotRegister");
+        notReg.setRole(RolesEnum.USER);
+
+        when(mockUserRepository.findAll()).thenReturn(List.of(user1,user2,user3,user4,notReg));
+
+        List<GetRegisteredUsersDTO> foundUsers = mockUserService.getAllUsers();
+
+        Assertions.assertEquals(4,foundUsers.size());
+        Assertions.assertEquals("gosko", foundUsers.getFirst().getUsername());
+        Assertions.assertEquals("gosko3", foundUsers.getLast().getUsername());
+
     }
 
     @Test
@@ -193,6 +216,12 @@ public class UserServiceImplTest {
 
     @Test
     void getUserById() {
+        when(mockUserRepository.findById(1L)).thenReturn(Optional.of(registeredUser));
+        User foundUser = mockUserService.getUserById(1L);
+        User notFoundUser = mockUserService.getUserById(2L);
+
+        Assertions.assertEquals("registered", foundUser.getUsername());
+        Assertions.assertNull(notFoundUser);
     }
 
     @Test
