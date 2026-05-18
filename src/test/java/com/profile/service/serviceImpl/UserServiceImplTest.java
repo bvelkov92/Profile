@@ -2,6 +2,7 @@ package com.profile.service.serviceImpl;
 
 import com.profile.models.dto.adminAccessDTO.FunctionsDTO;
 import com.profile.models.dto.adminAccessDTO.GetRegisteredUsersDTO;
+import com.profile.models.dto.userDTO.MyProfileDTO;
 import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
@@ -226,6 +227,25 @@ public class UserServiceImplTest {
 
     @Test
     void getProfileInfo() {
+
+        MyProfileDTO dto = new MyProfileDTO();
+        dto.setUsername("registered");
+
+        when(mockUserRepository.findById(1L))
+                .thenReturn(Optional.of(registeredUser));
+
+        when(mockModelMapper.map(registeredUser, MyProfileDTO.class))
+                .thenReturn(dto);
+
+        MyProfileDTO profileInfo = mockUserService.getProfileInfo(1L);
+
+
+        Assertions.assertEquals("registered", profileInfo.getUsername());
+
+        NullPointerException exception = assertThrows( NullPointerException.class,
+        () -> mockUserService.getProfileInfo(2L));
+
+        assertEquals("User not found", exception.getMessage());
     }
 
     @Test
