@@ -74,7 +74,7 @@ public class ProjectServiceImplTest {
 
         Assertions.assertEquals(2, getAllMyProjects.size());
         Assertions.assertEquals("myProjectOneForTest", getAllMyProjects.getFirst().getProjectName());
-
+        Assertions.assertEquals("regUser", getAllMyProjects.getLast().getProjectCreator().getUsername());
     }
 
     @Test
