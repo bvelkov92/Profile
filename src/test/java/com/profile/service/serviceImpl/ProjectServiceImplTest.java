@@ -21,8 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProjectServiceImplTest {
@@ -74,9 +75,9 @@ public class ProjectServiceImplTest {
 
         List<Project> getAllMyProjects = mockProjectService.getMyAllProjects();
 
-        Assertions.assertEquals(2, getAllMyProjects.size());
-        Assertions.assertEquals("myProjectOneForTest", getAllMyProjects.getFirst().getProjectName());
-        Assertions.assertEquals("regUser", getAllMyProjects.getLast().getProjectCreator().getUsername());
+        assertEquals(2, getAllMyProjects.size());
+        assertEquals("myProjectOneForTest", getAllMyProjects.getFirst().getProjectName());
+        assertEquals("regUser", getAllMyProjects.getLast().getProjectCreator().getUsername());
     }
 
     @Test
@@ -85,30 +86,51 @@ public class ProjectServiceImplTest {
         SecurityContext securityContext = mock(SecurityContext.class);
         SecurityContextHolder.setContext(securityContext);
 
-        AddNewProjectDTO projectWithImage = new AddNewProjectDTO();
-        projectWithImage.setProjectName("The most new project with image");
+        User creator = new User();
+        creator.setUsername("regUser");
+
+        AddNewProjectDTO projectDto = new AddNewProjectDTO();
+        projectDto.setProjectName("The most new project with image");
+
+        Project mappedProject = new Project();
 
         MockMultipartFile mockFile = new MockMultipartFile(
-                "projectImage",          // name
-                "image.png",             // original filename
-                "image/png",             // content type
+                "projectImage",
+                "image.png",
+                "image/png",
                 "fake image content".getBytes()
         );
-        //TODO: Да се провери, защо не минава.
-//
-//        AddNewProjectDTO projectNoImage = new AddNewProjectDTO();
-//        projectNoImage.setProjectName("The most new project with image");
+
+        SecurityContextHolder.setContext(securityContext);
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("regUser");
-        when(mockUserRepository.findByUsername(authentication.getName())).thenReturn(Optional.of(creator));
-        mockProjectService.addProject(projectWithImage,mockFile);
 
-        List<Project> myAllProjects = mockProjectService.getMyAllProjects();
+        when(mockUserRepository.findByUsername("regUser"))
+                .thenReturn(Optional.of(creator));
 
+        when(mockModelMapper.map(projectDto, Project.class))
+                .thenReturn(mappedProject);
 
-        Assertions.assertEquals(3, myAllProjects.size());
+        when(mockProjectRepository.save(any(Project.class)))
+                .thenReturn(mappedProject);
 
+        mockProjectService.addProject(projectDto, mockFile);
 
+        verify(mockProjectRepository, times(1)).save(any(Project.class));
+
+        assertEquals(
+                "The most new project with image",
+                mappedProject.getProjectName()
+        );
+
+        assertEquals(
+                creator,
+                mappedProject.getProjectCreator()
+        );
+
+        assertNotNull(mappedProject.getProjectImage());
     }
+
 }
+
