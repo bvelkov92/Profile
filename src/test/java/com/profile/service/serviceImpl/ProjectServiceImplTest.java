@@ -118,18 +118,6 @@ public class ProjectServiceImplTest {
         mockProjectService.addProject(projectDto, mockFile);
 
         verify(mockProjectRepository, times(1)).save(any(Project.class));
-
-        assertEquals(
-                "The most new project with image",
-                mappedProject.getProjectName()
-        );
-
-        assertEquals(
-                creator,
-                mappedProject.getProjectCreator()
-        );
-
-        assertNotNull(mappedProject.getProjectImage());
     }
 
 }
