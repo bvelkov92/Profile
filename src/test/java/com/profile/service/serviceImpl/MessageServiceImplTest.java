@@ -40,11 +40,38 @@ public class MessageServiceImplTest {
     @Mock
     private ModelMapper mockModelMapper;
 
+    Message message = new Message();
+    User foundSender = new User();
+    User foundReceiver = new User();
+
     @BeforeEach
     void setUp(){
+
+        ///======= SERVICE =======
         mockMessageService = new MessageServiceImpl(mockUserRepository,
                 mockMessageRepository,
                 mockModelMapper);
+
+        //============= USERS ======================
+
+        foundSender.setUsername("mockSender");
+        foundSender.setSentMessages(new ArrayList<>());
+        foundSender.setReceivedMessages(new ArrayList<>());
+
+        foundReceiver.setUsername("mockReceiver");
+        foundReceiver.setSentMessages(new ArrayList<>());
+        foundReceiver.setReceivedMessages(new ArrayList<>());
+
+       ///============= Messages ===================================
+
+        message.setSender(foundSender);
+        message.setReceiver(foundReceiver);
+        message.setText("Text message");
+        message.setSubject("Subject");
+        message.setSentAt(LocalDateTime.now());
+        message.setSeenFromReceiver(false);
+        message.setSeenFromSender(true);
+
     }
 
     @Test
@@ -52,36 +79,18 @@ public class MessageServiceImplTest {
 
         String senderUsername = "mockSender";
         Long receiverById = 2L;
-        String message = "Successfully";
-        String subject = "Test subject";
+        String testMessage = "Text message";
+        String subject = "Subject";
 
-
-        User foundSender = new User();
-        foundSender.setUsername("mockSender");
-        foundSender.setSentMessages(new ArrayList<>());
-        foundSender.setReceivedMessages(new ArrayList<>());
-
-        User foundReceiver = new User();
-        foundReceiver.setUsername("mockReceiver");
-        foundReceiver.setSentMessages(new ArrayList<>());
-        foundReceiver.setReceivedMessages(new ArrayList<>());
-
-        Message mappedMessage = new Message();
-        mappedMessage.setText(message);
-        mappedMessage.setSentAt(LocalDateTime.now());
-        mappedMessage.setSubject(subject);
-        mappedMessage.setSeenFromSender(true);
-        mappedMessage.setSeenFromReceiver(false);
-
-        foundSender.getSentMessages().add(mappedMessage);
-        foundReceiver.getReceivedMessages().add(mappedMessage);
+        foundSender.getSentMessages().add(message);
+        foundReceiver.getReceivedMessages().add(message);
 
         when(mockUserRepository.findByUsername(senderUsername)).thenReturn(Optional.of(foundSender));
         when(mockUserRepository.findById(receiverById)).thenReturn(Optional.of(foundReceiver));
         when(mockModelMapper.map(any(MessageDTO.class), eq(Message.class)))
-                .thenReturn(mappedMessage);
+                .thenReturn(message);
 
-        mockMessageService.sendMsg(senderUsername, receiverById,message,subject);
+        mockMessageService.sendMsg(senderUsername, receiverById,testMessage,subject);
 
         Integer senderNumberReceivedMessagesMustBeZero = foundSender.getReceivedMessages().size();
         Integer senderNumberSentMessagesMustBeOne = foundSender.getSentMessages().size();
@@ -95,10 +104,10 @@ public class MessageServiceImplTest {
         Assertions.assertEquals(1, receiverNumberReceivedMessagesMustBeOne);
         Assertions.assertEquals(0, receiverNumberSentMessagesMustBeZero);
 
-        Assertions.assertEquals("Successfully", foundSender.getSentMessages().getFirst().getText());
-        Assertions.assertEquals("Test subject", foundSender.getSentMessages().getFirst().getSubject());
-        Assertions.assertEquals("Successfully", foundReceiver.getReceivedMessages().getFirst().getText());
-        Assertions.assertEquals("Test subject", foundReceiver.getReceivedMessages().getFirst().getSubject());
+        Assertions.assertEquals("Text message", foundSender.getSentMessages().getFirst().getText());
+        Assertions.assertEquals("Subject", foundSender.getSentMessages().getFirst().getSubject());
+        Assertions.assertEquals("Text message", foundReceiver.getReceivedMessages().getFirst().getText());
+        Assertions.assertEquals("Subject", foundReceiver.getReceivedMessages().getFirst().getSubject());
     }
 
     @Test
@@ -107,32 +116,15 @@ public class MessageServiceImplTest {
         SecurityContext securityContext= mock(SecurityContext.class);
         SecurityContextHolder.setContext(securityContext);
 
-        User loggedUser = new User();
-        loggedUser.setUsername("loggedUser");
-        loggedUser.setSentMessages(new ArrayList<>());
-        loggedUser.setReceivedMessages(new ArrayList<>());
-
-        User receiver = new User();
-        receiver.setUsername("receiverUser");
-
-        Message message = new Message();
-        message.setSender(loggedUser);
-        message.setReceiver(receiver);
-        message.setText("Text message");
-        message.setSubject("Subject");
-        message.setSentAt(LocalDateTime.now());
-        message.setSeenFromReceiver(false);
-        message.setSeenFromSender(true);
-
-        loggedUser.getSentMessages().add(message);
+        foundSender.getSentMessages().add(message);
 
         List<Message> listWithMessages = List.of(message);
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("loggedUser");
-        when(mockUserRepository.findByUsername("loggedUser")).thenReturn(Optional.of(loggedUser));
+        when(mockUserRepository.findByUsername("loggedUser")).thenReturn(Optional.of(foundSender));
 
-        when(mockMessageRepository.findAllBySenderOrReceiver(loggedUser,loggedUser))
+        when(mockMessageRepository.findAllBySenderOrReceiver(foundSender,foundSender))
                 .thenReturn(listWithMessages);
 
         List<LoggedUserMessagesDTO> allMyMessages = mockMessageService.getAllMyMessages();
