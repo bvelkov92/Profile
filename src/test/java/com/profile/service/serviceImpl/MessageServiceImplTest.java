@@ -76,7 +76,6 @@ public class MessageServiceImplTest {
 
     @Test
     void sendMsg() {
-
         String senderUsername = "mockSender";
         Long receiverById = 2L;
         String testMessage = "Text message";
@@ -137,8 +136,25 @@ public class MessageServiceImplTest {
 
     @Test
     void hasUnreadMessages() {
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
 
+        foundReceiver.getReceivedMessages().add(message);
 
+        List<Message> receivedMessages = List.of(message);
+
+        when(authentication.getName()).thenReturn("mockReceiver");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(mockUserRepository.findByUsername(authentication.getName())).thenReturn(Optional.of(foundReceiver));
+        when(mockMessageRepository.findAllBySenderOrReceiver(foundReceiver, foundReceiver)).thenReturn(receivedMessages);
+
+        boolean hasUnreadMessages = mockMessageService.hasUnreadMessages();
+        Assertions.assertTrue(hasUnreadMessages);
+
+        receivedMessages.getFirst().setSeenFromReceiver(true);
+        boolean hasNotUnreadMessages = mockMessageService.hasUnreadMessages();
+        Assertions.assertFalse(hasNotUnreadMessages);
     }
 
     @Test
