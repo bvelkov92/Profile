@@ -2,8 +2,11 @@ package com.profile.service.serviceImpl;
 
 import com.profile.models.dto.MessageDTO.LoggedUserMessagesDTO;
 import com.profile.models.dto.MessageDTO.MessageDTO;
+import com.profile.models.dto.MessageDTO.MessageToAdminsDTO;
+import com.profile.models.dto.userDTO.SendMessageToAllAdminsDTO;
 import com.profile.models.entity.Message;
 import com.profile.models.entity.User;
+import com.profile.models.enums.RolesEnum;
 import com.profile.repository.MessageRepository;
 import com.profile.repository.UserRepository;
 import com.profile.service.serviceAnotation.MessageService;
@@ -25,8 +28,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MessageServiceImplTest {
@@ -159,13 +161,71 @@ public class MessageServiceImplTest {
 
     @Test
     void deleteMessage() {
+        mockMessageService.deleteMessage(1L);
+        verify(mockMessageRepository).deleteById(1L);
     }
 
     @Test
     void sendMsgToAllAdmins() {
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+
+        SendMessageToAllAdminsDTO dto = new SendMessageToAllAdminsDTO();
+        dto.setSubject("Test subject");
+        dto.setMessage("Test message");
+        dto.setName("Guest");
+
+        User admin = new User();
+        admin.setUsername("admin");
+
+        User loggedUser = new User();
+        loggedUser.setUsername("loggedUser");
+        loggedUser.setEmail("logged@abv.bg");
+
+        Message mappedMessage = new Message();
+
+        List<User> admins = List.of(admin);
+
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn("loggedUser");
+
+        when(mockUserRepository.findAllByRole(RolesEnum.ADMIN))
+                .thenReturn(admins);
+
+        when(mockUserRepository.findByUsername("NotRegister"))
+                .thenReturn(Optional.empty());
+
+        when(mockUserRepository.findByUsername("loggedUser"))
+                .thenReturn(Optional.of(loggedUser));
+
+        when(mockModelMapper.map(any(MessageToAdminsDTO.class), eq(Message.class)))
+                .thenReturn(mappedMessage);
+
+        mockMessageService.sendMsgToAllAdmins(dto);
+
+        Assertions.assertEquals("Test message", mappedMessage.getText());
+        Assertions.assertEquals(loggedUser, mappedMessage.getSender());
+        Assertions.assertEquals(admin, mappedMessage.getReceiver());
+        Assertions.assertEquals("logged@abv.bg", mappedMessage.getEmail());
+
+        verify(mockMessageRepository).save(mappedMessage);
+        verify(mockUserRepository).save(any(User.class));
     }
 
     @Test
     void changeMessageStatus() {
+        boolean seenFromReceiver = message.isSeenFromReceiver();
+
+        when(mockMessageRepository.findById(1L)).thenReturn(Optional.of(message));
+
+        mockMessageService.changeMessageStatus(1L);
+
+        boolean newStatus = message.isSeenFromReceiver();
+
+        Assertions.assertFalse(seenFromReceiver);
+        Assertions.assertTrue(newStatus);
+
+
     }
 }
