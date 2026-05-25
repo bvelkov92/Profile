@@ -120,5 +120,7 @@ public class ProjectServiceImplTest {
         verify(mockProjectRepository, times(1)).save(any(Project.class));
     }
 
+    //TODO: Is not wrote addProject test!
+
 }
 
