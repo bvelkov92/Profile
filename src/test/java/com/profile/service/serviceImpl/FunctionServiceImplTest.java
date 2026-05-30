@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +52,7 @@ class FunctionServiceImplTest {
     }
 
     @Test
-    void changeInvalidUserRole() {
+    void changeUserRoleInvalid() {
         String user = "invalidUser";
         RolesEnum newRole = RolesEnum.MODERATOR;
 
@@ -66,13 +67,39 @@ class FunctionServiceImplTest {
 
     @Test
     void deleteUser() {
+        String user = "mockedUser";
+        when(mockUserRepository.findByUsername(user)).thenReturn(Optional.of(mockedUser));
+        mockFunctionService.deleteUser(user);
+        verify(mockUserRepository).delete(mockedUser);
     }
 
     @Test
     void banUser() {
+        boolean isBannedFalse = mockedUser.isBanned();
+        String user = "mockedUser";
+        when(mockUserRepository.findByUsername(user)).thenReturn(Optional.of(mockedUser));
+
+        mockFunctionService.banUser(user);
+        boolean successfullyBanned = mockedUser.isBanned();
+        Assertions.assertTrue(successfullyBanned);
+        Assertions.assertNotEquals(isBannedFalse, successfullyBanned);
     }
 
     @Test
     void unbanUser() {
+        boolean isBannedFalse = mockedUser.isBanned();
+        String user = "mockedUser";
+        when(mockUserRepository.findByUsername(user)).thenReturn(Optional.of(mockedUser));
+
+        // User is not banned, test.
+        mockFunctionService.unbanUser(user);
+        Assertions.assertFalse(mockedUser.isBanned());
+
+        //Successfully unbanned user, test
+
+        mockedUser.setBanned(true);
+        mockFunctionService.unbanUser(user);
+        Assertions.assertFalse(mockedUser.isBanned());
+
     }
 }
