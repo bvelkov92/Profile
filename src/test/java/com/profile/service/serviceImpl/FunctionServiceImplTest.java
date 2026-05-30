@@ -3,7 +3,6 @@ package com.profile.service.serviceImpl;
 import com.profile.models.entity.User;
 import com.profile.models.enums.RolesEnum;
 import com.profile.repository.UserRepository;
-import com.profile.service.serviceAnotation.FunctionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.management.relation.Role;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
