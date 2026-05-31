@@ -60,17 +60,8 @@ class BlackListServiceImplTest {
 
     @Test
     void deleteUserFromBlackList() {
+
+
     }
 
-    @Test
-    void getUserRepository() {
-    }
-
-    @Test
-    void getBlackListRepository() {
-    }
-
-    @Test
-    void getModelMapper() {
-    }
 }
