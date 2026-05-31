@@ -60,7 +60,13 @@ class BlackListServiceImplTest {
     @Test
     void deleteUserFromBlackList() {
 
+        BlackListUser blackListUser = new BlackListUser();
+        String findUsername = "username";
+        when(mockBlackListRepository.findByBannedUser_Username(findUsername)).thenReturn(Optional.of(blackListUser));
 
+        mockBlackListService.deleteUserFromBlackList(mockedUser);
+
+        verify(mockBlackListRepository).delete(blackListUser);
     }
 
 }
