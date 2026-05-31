@@ -1,5 +1,6 @@
 package com.profile.controller;
 
+import com.profile.models.dto.userDTO.UserRegisterDTO;
 import com.profile.service.serviceAnotation.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +8,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -61,40 +67,55 @@ class UserControllerTest {
     }
 
     @Test
-    void getRegisterPage() {
+    @WithAnonymousUser
+    void getRegisterPage() throws Exception {
 
-        
+        mockMvc.perform(get("/register"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("register"))
+                .andExpect(model().attributeExists("userRegisterDTO"));
+
     }
 
     @Test
-    void postRegisterPage() {
-    }
+    void postRegisterPage() throws Exception {
 
-    @Test
-    void getWorkPage() {
-    }
+        UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
+        userRegisterDTO.setUsername("username");
+        when(mockUserService.isUsernameValid(userRegisterDTO)).thenReturn(true);
 
-    @Test
-    void getProfileInfoPage() {
-    }
+        MockMultipartFile file =
+                new MockMultipartFile(
+                        "userImage",
+                        "test.jpg",
+                        "image/jpeg",
+                        "test".getBytes());
 
-    @Test
-    void getChangeProfileInfoPage() {
+        mockMvc.perform(multipart("/register")
+                        .file(file)
+                        .param("username", "username123"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/register"));
     }
-
     @Test
-    void postProfileInfoPage() {
-    }
+    void postRegisterPageInvalidUsername() throws Exception {
 
-    @Test
-    void getSelectedProfilePage() {
-    }
+        when(mockUserService.isUsernameValid(any()))
+                .thenReturn(false);
 
-    @Test
-    void getChangeMyPasswordPage() {
-    }
+        MockMultipartFile file =
+                new MockMultipartFile(
+                        "userImage",
+                        "",
+                        "image/jpeg",
+                        new byte[0]);
 
-    @Test
-    void postChangeMyPasswordPage() {
+        mockMvc.perform(multipart("/register")
+                        .file(file)
+                        .param("username", "username123"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/register"));
+
+        verify(mockUserService, never()).userRegister(any(), any());
     }
 }
